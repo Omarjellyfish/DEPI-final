@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import axios from "axios";
 import "./TimeSelection.css";
 
 const TimeSelection = ({
-  times,
   selectedTime,
   setSelectedTime,
   selectedDate,
@@ -11,7 +11,23 @@ const TimeSelection = ({
   const [currentMonthIndex, setCurrentMonthIndex] = useState(
     new Date().getMonth()
   );
+  const [availableTimes, setAvailableTimes] = useState({});
+  const [holidayMessage, setHolidayMessage] = useState("");
+  const [filteredTimes, setFilteredTimes] = useState([]);
   const dayContainerRef = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("/db.json");
+        setAvailableTimes(response.data.availableTimes);
+      } catch (err) {
+        console.error("Error fetching data from JSON file:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const getDaysInMonth = (date) => {
     const daysInMonth = new Date(
@@ -48,7 +64,22 @@ const TimeSelection = ({
   };
 
   const handleDateSelection = (day) => {
-    setSelectedDate(new Date(day));
+    const selectedDateStr = day.toISOString().split("T")[0];
+    const isFriday = day.getDay() === 5;
+
+    if (isFriday) {
+      setHolidayMessage("This day is a holiday (Friday). No available times.");
+      setSelectedTime(null);
+      setFilteredTimes([]);
+    } else {
+      setHolidayMessage("");
+      setSelectedDate(new Date(day));
+
+      const availableTimesForSelectedDate =
+        availableTimes[selectedDateStr] || [];
+      setSelectedTime(null);
+      setFilteredTimes(availableTimesForSelectedDate);
+    }
   };
 
   return (
@@ -80,15 +111,19 @@ const TimeSelection = ({
             const dayName = dayNames[day.getDay()];
             const isSelected =
               selectedDate.toDateString() === day.toDateString();
+            const isFriday = day.getDay() === 5;
 
             return (
               <div key={day} className="text-center mx-2">
                 <div
                   className={`border rounded p-2 text-center day-box ${
                     isSelected ? "bg-primary text-white" : ""
-                  }`}
+                  } ${isFriday ? "bg-secondary text-white" : ""}`}
                   onClick={() => handleDateSelection(day)}
-                  style={{ width: "60px", cursor: "pointer" }}
+                  style={{
+                    width: "60px",
+                    cursor: isFriday ? "not-allowed" : "pointer",
+                  }}
                 >
                   <div className="fw-bold">{dayName}</div>
                   <div>{day.getDate()}</div>
@@ -102,18 +137,28 @@ const TimeSelection = ({
         </button>
       </div>
 
+      {holidayMessage && (
+        <div className="alert alert-warning mt-3">
+          <strong>{holidayMessage}</strong>
+        </div>
+      )}
+
       <div className="date-list mt-3">
-        {times.map((timeSlot) => (
-          <button
-            key={timeSlot.id}
-            className={`btn btn-light m-1 time-slot p-3 ${
-              selectedTime?.id === timeSlot.id ? "selected" : ""
-            }`}
-            onClick={() => setSelectedTime(timeSlot)}
-          >
-            {timeSlot.time}
-          </button>
-        ))}
+        {filteredTimes.length > 0 ? (
+          filteredTimes.map((timeSlot) => (
+            <button
+              key={timeSlot.id}
+              className={`btn btn-light m-1 time-slot p-3 ${
+                selectedTime?.id === timeSlot.id ? "selected" : ""
+              }`}
+              onClick={() => setSelectedTime(timeSlot)}
+            >
+              {timeSlot.time}
+            </button>
+          ))
+        ) : (
+          <div className="alert alert-info mt-3">No available times</div>
+        )}
       </div>
     </div>
   );
