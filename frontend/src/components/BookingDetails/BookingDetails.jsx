@@ -79,8 +79,12 @@ const BookingDetails = ({
 
     try {
       // userId should be taken from token
-      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData} ,{params : {userId:"64e0c5b61234567890abcdef"}});
-      setMessage("Appointment created successfully!");
+      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
+      if(response.data.error){
+        setMessage("There was an error creating your appointment. Please try again.");
+      }else{
+        setMessage("Appointment created successfully!");
+      }
     } catch (error) {
       console.error("Error creating appointment:", error);
       setMessage(

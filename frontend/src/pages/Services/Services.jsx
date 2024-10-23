@@ -17,7 +17,7 @@ function Services() {
     const fetchServices = async () => {
       try {
         const response = await axios.get("http://localhost:3000/services");
-        console.log(response.data,'hello from response data');
+        // console.log(response.data,'hello from response data');
         if (Array.isArray(response.data)) {
           setServices(response.data);
           setFilteredServices(response.data);
