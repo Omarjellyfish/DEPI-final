@@ -45,7 +45,7 @@ const BookingDetails = ({
         },
       ];
 
-      const response = await axios.post("/paypal/create-order", {
+      const response = await axios.post("http://localhost:3000/paypal/create-order", {
         items,
         cost: price,
       });
@@ -72,16 +72,14 @@ const BookingDetails = ({
       month: month,
       day: day,
       timeSlot: timeSlot,
-      user: {
-        /* user information */
-      },
       service: service,
       cost: price,
-      note: "Paying with cash",
+      note: "",
     };
 
     try {
-      const response = await axios.post("/appointments", appointmentData);
+      // userId should be taken from token
+      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData} ,{params : {userId:"64e0c5b61234567890abcdef"}});
       setMessage("Appointment created successfully!");
     } catch (error) {
       console.error("Error creating appointment:", error);
