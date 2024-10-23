@@ -61,9 +61,9 @@ export async function getAllAppointmentsMonth(req, res) {
 }
 
 export async function createAppointment(req, res) {
-  let user = req.userId;
+  let { userId } = req.query;
+  let user = userId;
   const { year, month, day, timeSlot, service, cost, note } = req.body;
-
   try {
     if (!allPossibleTimeSlots.includes(timeSlot)) {
       return res
