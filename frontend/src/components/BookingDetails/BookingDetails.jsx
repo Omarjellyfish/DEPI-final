@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 const BookingDetails = ({
   location,
   selectedServices,  // Receiving selectedServices prop
@@ -25,6 +25,13 @@ const BookingDetails = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const handleNavigation = () => {
+    navigate("/review");
+  };
+  const handleClick = () => {
+    handleNavigation();
+  };
 
   const handlePayPalCheckout = async () => {
     if (isLoading) return;
@@ -43,10 +50,13 @@ const BookingDetails = ({
         },
       }));
 
-      const response = await axios.post("http://localhost:3000/paypal/create-order", {
-        items,
-        cost: price,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/paypal/create-order",
+        {
+          items,
+          cost: price,
+        }
+      );
       window.location.href = response.data.approvalUrl;
     } catch (error) {
       console.error("Error creating PayPal order:", error);
@@ -74,11 +84,14 @@ const BookingDetails = ({
     };
 
     try {
+      // userId should be taken from token
       const response = await axios.post("http://localhost:3000/appointments", {
         ...appointmentData,
       });
       if (response.data.error) {
-        setMessage("There was an error creating your appointment. Please try again.");
+        setMessage(
+          "There was an error creating your appointment. Please try again."
+        );
       } else {
         setMessage("Appointment created successfully!");
       }
@@ -136,7 +149,7 @@ const BookingDetails = ({
       {showButtonNext && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={onNextClick}
+          onClick={handleClick}
           disabled={nextButtonDisabled}
         >
           Next
@@ -146,7 +159,6 @@ const BookingDetails = ({
       {showButtonBook && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={onNextClick}
           disabled={nextButtonDisabled}
         >
           Book Now

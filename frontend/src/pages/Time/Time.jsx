@@ -29,10 +29,9 @@ const Time = () => {
               service="Haircut - Premier Stylist"
               price="900"
               duration="1 hour"
-              // عرض التاريخ والوقت المحددين
               dateTime={`${selectedDate.toDateString()} at ${
                 selectedTime ? selectedTime : "not selected"
-              }`} // التعامل مع حالة عدم اختيار الوقت
+              }`}
               showDateTime={!!selectedTime}
               showButtonNext={true}
               nextButtonDisabled={!selectedTime || !selectedDate}
