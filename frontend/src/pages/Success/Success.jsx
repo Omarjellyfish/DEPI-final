@@ -82,8 +82,8 @@ function Success() {
           </div>
 
           <div className="col-md-8 bg-white rounded-3">
-            <div className="confirmed-service-parent d-flex flex-column justify-content-center">
-              <div className="title d-flex align-items-center justify-content-between pt-2">
+            <div className="confirmed-service-parent d-flex flex-column justify-content-center p-2">
+              <div className="title d-flex align-items-center justify-content-between pt-2 mb-4">
                 <h3 className="fs-4">{confirmedAppointment.dateTime}</h3>
                 <div
                   className="confirm-icon pe-2 m-3 btn-success rounded-pill d-flex align-items-center"
@@ -94,7 +94,7 @@ function Success() {
                 </div>
               </div>
 
-              <div className="service-options p-4">
+              <div className="service-options p-4 my-4">
                 <BookingDetails
                   location={confirmedAppointment.location}
                   service={confirmedAppointment.service}
@@ -102,11 +102,11 @@ function Success() {
                   dateTime={confirmedAppointment.dateTime}
                   duration={confirmedAppointment.duration}
                   showDateTime={true}
-                  showButtonPayPal={true}
-                  showButtonCash={true}
+                  showButtonPayPal={false}
+                  showButtonCash={false}
                 />
               </div>
-              <div class="cancellation-policy rounded my-5 mx-2 p-2">
+              <div class="cancellation-policy rounded mt-5 mx-2 p-2">
                 <h3 class="fs-6 fw-bold">Cancellation policy</h3>
                 <p class="fs-6 text-muted w-50">
                   Cancel for free anytime in advance, otherwise you will be
