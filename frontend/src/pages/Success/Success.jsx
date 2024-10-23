@@ -8,7 +8,6 @@ function Success() {
   const [confirmedAppointment, setConfirmedAppointment] = useState({});
 
   useEffect(() => {
-    // You can replace this with actual API calls to fetch appointments
     const fetchData = () => {
       const upcoming = [
         {
@@ -51,7 +50,6 @@ function Success() {
       <div className="container">
         <div className="row">
           <div className="col-md-4">
-            {/* Upcoming Appointments */}
             <div className="upcoming mb-5">
               <h3 className="fs-4 ms-5">Upcoming appointments</h3>
               {upcomingAppointments.map((appointment, index) => (
@@ -67,7 +65,6 @@ function Success() {
               ))}
             </div>
 
-            {/* Past Appointments */}
             <div className="past mb-5">
               <h3 className="fs-4 ms-5">Past appointments</h3>
               {pastAppointments.map((appointment, index) => (
@@ -84,7 +81,6 @@ function Success() {
             </div>
           </div>
 
-          {/* Confirmed Appointment */}
           <div className="col-md-8 bg-white rounded-3">
             <div className="confirmed-service-parent d-flex flex-column justify-content-center">
               <div className="title d-flex align-items-center justify-content-between pt-2">
