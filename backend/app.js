@@ -89,6 +89,7 @@ mongoose
     app.use(cors(corsOptions));
     const upload = multer();
     app.use(upload.fields([]));
+    app.use(express.urlencoded({ extended: true }));
     app.use(express.json());
     app.use("/user", userRouter);
     app.use("/admin", adminRouter);
