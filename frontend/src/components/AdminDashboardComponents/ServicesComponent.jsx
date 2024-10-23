@@ -10,9 +10,11 @@ const ServicesComponent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/services")
+      .get("http://localhost:3000/services")
       .then((response) => {
+        console.log(response,'hello from response');
         setServices(response.data);
+        console.log(services,'hello from services');
       })
       .catch((error) => {
         console.error("Error fetching services:", error);
@@ -28,7 +30,7 @@ const ServicesComponent = () => {
 
     if (editServiceId) {
       axios
-        .put(`http://localhost:5001/services/${editServiceId}`, newService)
+        .put(`http://localhost:3000/services`, newService)
         .then((response) => {
           setServices(
             services.map((service) =>
@@ -46,7 +48,7 @@ const ServicesComponent = () => {
         });
     } else {
       axios
-        .post("http://localhost:5001/services", newService)
+        .post("http://localhost:3000/services", newService)
         .then((response) => {
           setServices([...services, response.data]);
           toast.success("Service added successfully!");
@@ -62,7 +64,7 @@ const ServicesComponent = () => {
 
   const handleDeleteService = (serviceId) => {
     axios
-      .delete(`http://localhost:5001/services/${serviceId}`)
+      .delete(`http://localhost:3000/services`)
       .then(() => {
         setServices(services.filter((service) => service.id !== serviceId));
         toast.success("Service deleted successfully!");
@@ -74,7 +76,7 @@ const ServicesComponent = () => {
   };
 
   const handleUpdateService = (serviceId) => {
-    const serviceToEdit = services.find((service) => service.id === serviceId);
+    const serviceToEdit = services.find((service) => service.name === serviceId);
     if (serviceToEdit) {
       setServiceName(serviceToEdit.name);
       setServicePrice(serviceToEdit.cost);
