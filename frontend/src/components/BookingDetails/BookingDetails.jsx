@@ -7,7 +7,7 @@ import axios from "axios";
 
 const BookingDetails = ({
   location,
-  service,
+  selectedServices,  // Receiving selectedServices prop
   price,
   duration,
   dateTime,
@@ -33,17 +33,15 @@ const BookingDetails = ({
     setMessage("");
 
     try {
-      const items = [
-        {
-          name: service,
-          description: `${service}`,
-          quantity: 1,
-          unit_amount: {
-            currency_code: "USD",
-            value: price.toString(),
-          },
+      const items = selectedServices.map(service => ({
+        name: service.name,
+        description: `${service.name}`,
+        quantity: 1,
+        unit_amount: {
+          currency_code: "USD",
+          value: service.cost.toString(),
         },
-      ];
+      }));
 
       const response = await axios.post("http://localhost:3000/paypal/create-order", {
         items,
@@ -61,9 +59,7 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
-    if (isLoading) {
-      return;
-    }
+    if (isLoading) return;
 
     setIsLoading(true);
 
@@ -72,17 +68,18 @@ const BookingDetails = ({
       month: month,
       day: day,
       timeSlot: timeSlot,
-      service: service,
+      services: selectedServices, // Use selected services here
       cost: price,
       note: "",
     };
 
     try {
-      // userId should be taken from token
-      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
-      if(response.data.error){
+      const response = await axios.post("http://localhost:3000/appointments", {
+        ...appointmentData,
+      });
+      if (response.data.error) {
         setMessage("There was an error creating your appointment. Please try again.");
-      }else{
+      } else {
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
@@ -115,14 +112,24 @@ const BookingDetails = ({
               <hr />
             </div>
           )}
-          <div className="d-flex justify-content-between align-items-center">
-            <span className="service">{service}</span>
-            <span className="price">USD {price}</span>
+          <div className="selected-services">
+            <strong>Selected Services:</strong>
+            {selectedServices.length > 0 ? (
+              <ul>
+                {selectedServices.map((service, index) => (
+                  <li key={index}>
+                    {service.name} - USD {service.cost}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No services selected</p>
+            )}
           </div>
           <hr />
           <div className="d-flex justify-content-between fw-bold">
             <span>Total:</span>
-            <span>USD {price}</span>
+            <span>USD {selectedServices.reduce((total, s) => total + s.cost, 0)}</span>
           </div>
         </div>
       </div>
