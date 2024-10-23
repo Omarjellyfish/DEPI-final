@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosHeaders } from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -38,11 +38,20 @@ const Login = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("https://your-api-endpoint/login", {
-        email,
-        password,
-        remember,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/token/",
+        {},
+        {
+          headers: {
+            email,
+            password,
+            remember,
+          },
+        }
+      );
+      const token = response.data.token;
+      const refresh = response.data.refresh;
+      console.log(token, refresh);
 
       toast.success("Login successful!");
       console.log("Login successful:", response.data);
