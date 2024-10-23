@@ -16,10 +16,7 @@ import TokenRepos from "../../repositories/token.rep.js";
 const AppointmentRoutes = express.Router();
 //public
 AppointmentRoutes.get("/available-times", getAvailableTimes);
-//admin
-AppointmentRoutes.get("/month", getAllAppointmentsMonth);
-AppointmentRoutes.delete("/cancel", cancelAppointment);
-AppointmentRoutes.post("/", createAppointment);
+
 AppointmentRoutes.use(async (req, res, next) => {
   CustomePasetoMiddleWare(
     req,
@@ -38,12 +35,11 @@ AppointmentRoutes.use(CustomePasetoMiddleWare);
 
 //admin;
 AppointmentRoutes.get("/day", getAllAppointmentsDay);
-//admin;
-
 //both
-
+AppointmentRoutes.delete("/cancel", cancelAppointment);
+AppointmentRoutes.post("/", createAppointment);
 //user
 AppointmentRoutes.get("/user", getUserAppointmentsController);
-//both
-
+//admin
+AppointmentRoutes.get("/month", getAllAppointmentsMonth);
 export default AppointmentRoutes;

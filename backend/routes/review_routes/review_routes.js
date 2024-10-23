@@ -12,25 +12,10 @@ function ReviewRouterFun(
 ) {
   const router = Router();
   const reviewController = new ReviewController(ReviewModel);
-  router.use(async(req,res,next)=>{
-    
-    CustomePasetoMiddleWare(req, res, next, TokenController,userModel, adminModel,tokenRepos)
-  })
-  router.use(async(req,res,next)=>{
-    
-    CheckPermission(req, res, next);
-  });
   //public
   router.get("/", async (req, res, next) => {
     try {
       await reviewController.getAllReviews(req, res);
-    } catch (error) {
-      next(error); //implement your error custom
-    }
-  });
-  router.post("/", async (req, res, next) => {
-    try {
-      await reviewController.postReview(req, res);
     } catch (error) {
       next(error); //implement your error custom
     }
@@ -51,6 +36,13 @@ function ReviewRouterFun(
   });
 
   //user
+  router.post("/", async (req, res, next) => {
+    try {
+      await reviewController.postReview(req, res);
+    } catch (error) {
+      next(error); //implement your error custom
+    }
+  });
 
   return router;
 }
