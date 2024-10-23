@@ -38,6 +38,9 @@
 }
 
 .form-control-testimonials {
+  color: #fff;
+  border: none;
+  background-color: #7b56d0;
   max-width: 450px;
 }
 
@@ -54,6 +57,7 @@
 }
 
 .rating-num {
+  color: #fff;
   max-width: 200px;
 }
 

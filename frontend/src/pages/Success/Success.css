@@ -4,6 +4,10 @@
   border-right: 3px solid #ffa101;
 }
 
+.success .booking-card {
+  border-right: 3px solid #ffa101 !important;
+}
+
 .service-img {
   height: 100px;
 }
@@ -41,4 +45,29 @@
 .icon-parent:hover {
   background-color: #ffa101 !important;
   color: white !important;
+}
+
+.success .service-options {
+  align-self: center;
+  background-color: rgb(204 216 228) !important;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+.cancellation-policy {
+  background-color: rgb(204 216 228) !important;
+  border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;
+  -ms-border-radius: 8px;
+  -o-border-radius: 8px;
+}
+
+@media (min-width: 768px) {
+  .success .service-options {
+    max-width: 60%;
+  }
 }
