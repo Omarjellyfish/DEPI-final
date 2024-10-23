@@ -49,6 +49,7 @@ function TokenRouteFunc(userModel, adminModel,TokenRepos,TokenController
             result=await new TokenController(userModel, adminModel,TokenRepos,tokenModel,next) . createTokenByRefresh(req.headers["token"]) 
         }
         if(result){
+            result["userType"]=req.typeUser
             res.send(result)
         }
     });

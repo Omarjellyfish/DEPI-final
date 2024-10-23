@@ -92,7 +92,7 @@ class TokenRepos {
     refreshModel.user = userId;
     await tokenModel.save();
     await refreshModel.save();
-    return { token: token, refresh: refresh };
+    return { token: token, refresh: refresh ,};
   }
   async deleteUserToken(userId){
     let user=await this.TokenModel.deleteMany({user:userId});
