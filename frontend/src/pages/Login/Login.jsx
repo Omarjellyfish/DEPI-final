@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
-import { Link } from "react-router-dom";
-import axios, { AxiosHeaders } from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +12,7 @@ const Login = () => {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!email || !password) {
@@ -53,8 +54,12 @@ const Login = () => {
       const refresh = response.data.refresh;
       console.log(token, refresh);
 
+      localStorage.setItem("token", token);
+      localStorage.setItem("refresh", refresh);
+
       toast.success("Login successful!");
       console.log("Login successful:", response.data);
+      navigate("/services");
     } catch (error) {
       if (error.response) {
         setError(
