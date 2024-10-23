@@ -40,3 +40,79 @@
   -o-transition: 0.3s;
 }
 
+.services {
+  height: calc(100vh - 112px);
+}
+
+.services-parent .details {
+  width: 100%;
+}
+
+.services-parent .service-name {
+  justify-content: space-between;
+}
+
+.services-parent .service {
+  margin: 0.5rem !important;
+}
+
+.selected {
+  background-color: #0aa9de;
+  color: initial;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.selected .fa-check {
+  background-color: #ffa101;
+}
+
+.selected:hover {
+  background-color: #0aa9de;
+  color: initial;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.services form svg {
+  padding: 0.5rem;
+  color: #0aa9de;
+  width: 18.02px;
+  height: 18.02px;
+  top: 50%;
+  left: 15px;
+  transform: translatey(-50%);
+}
+
+.services input[type="search"] {
+  width: 50%;
+  height: 44px;
+  border-radius: 15px;
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  outline: none;
+  border: none;
+  background-color: #d9dde080;
+  transition: 0.5s ease;
+}
+
+.services input[type="search"]:focus {
+  width: 70% !important;
+}
+
+@media (min-width: 992px) {
+  .services input[type="search"]:focus {
+    outline: none;
+    box-shadow: none;
+    width: 300px;
+  }
+}
