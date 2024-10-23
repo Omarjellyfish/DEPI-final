@@ -16,19 +16,6 @@ const TimeSelection = ({
   const [filteredTimes, setFilteredTimes] = useState([]);
   const dayContainerRef = useRef(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("/db.json");
-        setAvailableTimes(response.data.availableTimes);
-      } catch (err) {
-        console.error("Error fetching data from JSON file:", err);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   const getDaysInMonth = (date) => {
     const daysInMonth = new Date(
       date.getFullYear(),
@@ -144,7 +131,7 @@ const TimeSelection = ({
       )}
 
       <div className="date-list mt-3">
-        {filteredTimes.length > 0 ? (
+        {/* {filteredTimes.length > 0 ? (
           filteredTimes.map((timeSlot) => (
             <button
               key={timeSlot.id}
@@ -156,9 +143,9 @@ const TimeSelection = ({
               {timeSlot.time}
             </button>
           ))
-        ) : (
+        ) : ( */}
           <div className="alert alert-info mt-3">No available times</div>
-        )}
+        {/* )} */}
       </div>
     </div>
   );
