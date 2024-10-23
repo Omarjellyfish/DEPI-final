@@ -20,23 +20,24 @@ const both={'/appointments':["post"],
     "/services":["get"],
     "/appointments/available-times/":["get"],
 }
-
+ 
 export default function CheckPermission(req, res, next) {
     console.log(req.originalUrl)
+    console.log(req.typeUser)
    try{
-    console.log((route_user[req.originalUrl]==null&&req.userType=="user"))
-    if((routes_admin[req.originalUrl]==null&&req.userType=="admin")
+    if((routes_admin[req.originalUrl]==null&&req.typeUser=="admin")
         ||
-    (route_user[req.originalUrl]==null&&req.userType=="user")||
-    (req.userType=="admin"&&routes_admin[req.originalUrl].indexOf("*")==-1&&routes_admin[req.originalUrl].indexOf(req.method.toLower())==-1)||
-    (req.userType=="user"&&route_user[req.originalUrl].indexOf("*")==-1&&route_user[req.originalUrl].indexOf(req.method.toLower())==-1)){
+    (route_user[req.originalUrl]==null&&req.typeUser=="user")||
+    (req.typeUser=="admin"&&routes_admin[req.originalUrl].indexOf("*")==-1&&routes_admin[req.originalUrl].indexOf(req.method.toLower())==-1)||
+    (req.typeUser=="user"&&route_user[req.originalUrl].indexOf("*")==-1&&route_user[req.originalUrl].indexOf(req.method.toLower())==-1)){
         let err={}
         err.res=new ErrorCustome("you do noth have permission","Check Permission",500);
         next(err);
         return;
     }
     console.log("hyyyyfrrrr")
-    next();
+    //next();
+    res.send({"iii":677});
    }
    catch(e){
     console.log(e);

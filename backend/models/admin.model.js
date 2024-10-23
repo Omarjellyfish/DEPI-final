@@ -36,7 +36,7 @@ const AdminSchema=Schema({
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
               },
               message:function(prop){
-                return "it is not a valid number";
+                return "it is not a valid email";
               }
         }
     },
