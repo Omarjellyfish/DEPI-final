@@ -1,8 +1,0 @@
-:root {
-    --body-color: #F7F8FA;
-}
-
-.time {
-    background-color: var(--body-color);
-    padding: 20px;
-}
