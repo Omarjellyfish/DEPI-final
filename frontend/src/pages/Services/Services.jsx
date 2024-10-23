@@ -17,6 +17,7 @@ function Services() {
     const fetchServices = async () => {
       try {
         const response = await axios.get("http://localhost:3000/services");
+        // console.log(response.data,'hello from response data');
         if (Array.isArray(response.data)) {
           setServices(response.data);
           setFilteredServices(response.data);
@@ -49,6 +50,24 @@ function Services() {
     setFilteredServices(filtered);
   };
 
+  const sendSelectedServicesToBackend = async () => {
+    try {
+      const response = await axios.post(
+        "/api/selected-services",
+        selectedServices
+      );
+
+      if (response.status !== 200) {
+        throw new Error("Failed to send selected services");
+      }
+
+      alert("Selected services sent successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Error sending selected services");
+    }
+  };
+
   return (
     <div className="services bg-light">
       <div className="container pt-5">
@@ -60,7 +79,7 @@ function Services() {
 
             <form
               action="#"
-              className="col-md-6 d-flex position-relative flex-grow-1 flex-lg-grow-0 mb-3 mb-lg-0"
+              className="col-md-6 ms-3 d-flex position-relative flex-grow-1 flex-lg-grow-0 mb-3 mb-lg-0"
             >
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
@@ -75,7 +94,7 @@ function Services() {
                 onChange={handleSearchChange}
               />
             </form>
-            <h4 className="col-md-3 fs-4 my-4 therapy py-2 mx-2 rounded">
+            <h4 className="col-md-3 fs-4 my-4 therapy py-2 px-4 rounded">
               Physical Therapy
             </h4>
           </div>
@@ -112,8 +131,13 @@ function Services() {
               duration="1h"
               showDateTime={true}
               showButtonNext={true}
-              selectedServices={selectedServices} // Passing selected services as prop
             />
+            <button
+              onClick={sendSelectedServicesToBackend}
+              className="btn btn-primary mt-3"
+            >
+              Proceed with Selected Services
+            </button>
           </div>
         </div>
       </div>
