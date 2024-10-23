@@ -31,17 +31,10 @@ const BookingDetails = ({
   const { selectedServices } = useContext(SelectedServicesContext);
   const service =
     selectedServices.map((s) => s.name).join(", ") || "No Service";
-  const price =
-    selectedServices.reduce((total, s) => total + s.cost, 0) || 0;
+  const price = selectedServices.reduce((total, s) => total + s.cost, 0) || 0;
 
   const handleNavigation = () => {
     navigate("/review");
-  };
-  const handleNavigationtime = () => {
-    navigate("/time");
-  };
-  const handleNavigationCash = () => {
-    navigate("/success");
   };
 
   const handlePayPalCheckout = async () => {
@@ -82,7 +75,6 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
-    handleNavigationCash();
     if (isLoading) {
       return;
     }
@@ -100,11 +92,14 @@ const BookingDetails = ({
     };
 
     try {
-      // userId should be taken from token
-      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
-      if(response.data.error){
-        setMessage("There was an error creating your appointment. Please try again.");
-      }else{
+      const response = await axios.post("http://localhost:3000/appointments", {
+        ...appointmentData,
+      });
+      if (response.data.error) {
+        setMessage(
+          "There was an error creating your appointment. Please try again."
+        );
+      } else {
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
@@ -151,8 +146,8 @@ const BookingDetails = ({
       {showButtonNext && (
         <button
           className="btn btn-primary w-100 mt-3"
+          onClick={handleNavigation}
           disabled={nextButtonDisabled}
-          onClick={handleNavigationtime}
         >
           Next
           <FontAwesomeIcon icon={faArrowRight} className="arrow-icon ms-3" />
@@ -161,7 +156,7 @@ const BookingDetails = ({
       {showButtonBook && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={handleNavigationreview}
+          onClick={onNextClick}
           disabled={nextButtonDisabled}
         >
           Book Now
@@ -170,7 +165,9 @@ const BookingDetails = ({
       )}
       {showButtonPayPal && (
         <button
-          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
+          className={`btn ${
+            isLoading ? "btn-secondary" : "btn-primary"
+          } w-100 mt-3`}
           onClick={handlePayPalCheckout}
           disabled={nextButtonDisabled || isLoading}
         >
@@ -179,7 +176,9 @@ const BookingDetails = ({
       )}
       {showButtonCash && (
         <button
-          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
+          className={`btn ${
+            isLoading ? "btn-secondary" : "btn-primary"
+          } w-100 mt-3`}
           onClick={handleCashCheckout}
           disabled={nextButtonDisabled || isLoading}
         >
