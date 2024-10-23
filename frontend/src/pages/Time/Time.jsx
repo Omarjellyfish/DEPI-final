@@ -12,13 +12,18 @@ const Time = () => {
 
   const fetchAvailableTimes = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:5000/times");
-      const availableTimes = response.data.filter((time) => !time.isBooked);
-      setTimes(availableTimes);
+      const year = selectedDate.getFullYear();
+      const month = selectedDate.getMonth() + 1;
+      const day = selectedDate.getDate();
+
+      const response = await axios.get(
+        `http://localhost:5001/times/${year}/${month}/${day}`
+      );
+      setTimes(response.data.availableTimes);
     } catch (err) {
       console.error("Error fetching available times:", err);
     }
-  }, []);
+  }, [selectedDate]);
 
   const postBookingDetails = async () => {
     if (!selectedDate || !selectedTime) {
@@ -28,7 +33,7 @@ const Time = () => {
 
     try {
       const formattedDate = selectedDate.toISOString().split("T")[0];
-      const response = await axios.post("http://localhost:5000/bookings", {
+      const response = await axios.post("http://localhost:5001/bookings", {
         time: selectedTime?.id,
         date: formattedDate,
       });
