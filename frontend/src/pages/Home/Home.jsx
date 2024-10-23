@@ -74,13 +74,15 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/Workdays")
+      .get("http://localhost:3000/workdays")
       .then((response) => {
         const data = response.data;
-        if (data && data.startWorkDay && data.endWorkDay) {
+        console.log(response.data[0].startWorkDay,'hello form work day');
+        if (data && data[0].startWorkDay && data[0].endWorkDay) {
+
           setWorkdays({
-            startWorkDay: data.startWorkDay,
-            endWorkDay: data.endWorkDay,
+            startWorkDay: data[0].startWorkDay,
+            endWorkDay: data[0].endWorkDay,
           });
         } else {
           console.error("Invalid data structure:", response.data);
@@ -273,12 +275,12 @@ function Home() {
             <div className="col-md-3 d-flex flex-md-row flex-column text-center text-md-start">
               <FontAwesomeIcon icon={faClock} className="pe-3 pb-md-0 pb-3" />
               <div>
-                <p>work days available</p>
-                {workDaysRange.length > 0 ? (
-                  <p>{workDaysRange.join(", ")}</p>
-                ) : (
-                  <p>No workdays available</p>
-                )}
+              {workdays.startWorkDay && workdays.endWorkDay ? (
+  <p>Starting from: {workdays.startWorkDay}<br></br> to: {workdays.endWorkDay}</p>
+) : (
+  <p>No workdays available</p>
+)}
+
               </div>
             </div>
             <div className="col-md-3 flex-md-row flex-column text-center text-md-start">

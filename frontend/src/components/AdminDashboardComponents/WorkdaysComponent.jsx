@@ -8,9 +8,10 @@ const WorkdaysComponent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/Workdays")
+      .get("http://localhost:3000/workdays")
       .then((response) => {
-        const { startWorkDay, endWorkDay } = response.data;
+        const { startWorkDay, endWorkDay } = response.data[0];
+        console.log(startWorkDay,endWorkDay , 'hello from this');
         setStartWorkDay(startWorkDay);
         setEndWorkDay(endWorkDay);
       })
@@ -21,13 +22,12 @@ const WorkdaysComponent = () => {
 
   const handleWorkdaysSubmit = (e) => {
     e.preventDefault();
-    const updatedDays = {
-      startWorkDay,
-      endWorkDay,
+    const updatedDays = {  // "key": , "value":
+      "key": "startWorkDay" ,"value":startWorkDay,
     };
 
     axios
-      .put("http://localhost:5001/Workdays", updatedDays)
+      .put("http://localhost:3000/workdays", updatedDays)
       .then(() => {
         toast.success("Clinic Days updated successfully!");
       })
