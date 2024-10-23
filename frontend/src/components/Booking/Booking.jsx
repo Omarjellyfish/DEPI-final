@@ -5,8 +5,7 @@ export default function Booking({
   bookerName,
   service,
   bookingDate,
-  bookingTime,
-  onCancel,
+  cost,
 }) {
   return (
     <div className="card mb-3">
@@ -14,7 +13,7 @@ export default function Booking({
         <h5 className="card-title">{service}</h5>
         <p className="card-text">Booked by: {bookerName}</p>
         <p className="card-text">Date: {bookingDate}</p>
-        <p className="card-text">Time: {bookingTime}</p>
+        <p className="card-text">cost: {cost}</p>
       </div>
     </div>
   );

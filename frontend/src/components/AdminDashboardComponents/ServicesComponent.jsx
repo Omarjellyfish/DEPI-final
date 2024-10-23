@@ -21,14 +21,17 @@ const ServicesComponent = () => {
 
   const handleServiceSubmit = (e) => {
     e.preventDefault();
-    const newService = {
+    const updateService = {
+      name: serviceName,
+      newCost: servicePrice,
+    };
+    const newService={
       name: serviceName,
       cost: servicePrice,
-    };
-
+    }
     if (editServiceName) {
       axios
-        .put(`http://localhost:3000/services`, newService)
+        .put(`http://localhost:3000/services/update-service`, updateService)
         .then((response) => {
           setServices(
             services.map((service) =>
@@ -63,7 +66,7 @@ const ServicesComponent = () => {
   const handleDeleteService = (serviceName) => {
     console.log("Deleting service:", serviceName);
     axios
-      .delete(`http://localhost:3000/services`, { data: { name: serviceName } })
+      .delete(`http://localhost:3000/services/delete-service`, { data: { name: serviceName } })
       .then(() => {
         setServices(services.filter((service) => service.name !== serviceName));
         toast.success("Service deleted successfully!");

@@ -14,6 +14,12 @@ import User from "../../models/user.model.js";
 import Admin from "../../models/admin.model.js";
 import TokenRepos from "../../repositories/token.rep.js";
 const AppointmentRoutes = express.Router();
+//public
+AppointmentRoutes.get("/available-times/:year/:month/:day", getAvailableTimes);
+//admin
+AppointmentRoutes.get("/month", getAllAppointmentsMonth);
+AppointmentRoutes.delete("/cancel", cancelAppointment);
+AppointmentRoutes.post("/", createAppointment);
 AppointmentRoutes.use(async (req, res, next) => {
   CustomePasetoMiddleWare(
     req,
@@ -29,17 +35,15 @@ AppointmentRoutes.use(async (req, res, next) => {
   CheckPermission(req, res, next);
 });
 AppointmentRoutes.use(CustomePasetoMiddleWare);
-//public
-//AppointmentRoutes.get('/available-times/:year/:month/:day', getAvailableTimes);
+
 //admin;
-AppointmentRoutes.get("day", getAllAppointmentsDay);
+AppointmentRoutes.get("/day", getAllAppointmentsDay);
 //admin;
-AppointmentRoutes.get("/month", getAllAppointmentsMonth);
+
 //both
-AppointmentRoutes.post("/", createAppointment);
+
 //user
 AppointmentRoutes.get("/user", getUserAppointmentsController);
 //both
-AppointmentRoutes.delete("/cancel", cancelAppointment);
 
 export default AppointmentRoutes;

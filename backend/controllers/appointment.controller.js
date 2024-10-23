@@ -38,8 +38,9 @@ export async function getAllAppointmentsDay(req, res) {
 }
 
 export async function getAllAppointmentsMonth(req, res) {
-  const { year, month } = req.params;
-
+  let { year, month } = req.query;
+  year = parseInt(year);
+  month = parseInt(month);
   try {
     const appointments = await findAllAppointmentsByMonth(year, month);
 
@@ -60,10 +61,9 @@ export async function getAllAppointmentsMonth(req, res) {
 }
 
 export async function createAppointment(req, res) {
-  console.log(req.userId);
-  let user = req.userId;
+  let { userId } = req.query;
+  let user = userId;
   const { year, month, day, timeSlot, service, cost, note } = req.body;
-
   try {
     if (!allPossibleTimeSlots.includes(timeSlot)) {
       return res
@@ -178,7 +178,7 @@ export async function getUserAppointmentsController(req, res) {
   }
 }
 export async function cancelAppointment(req, res) {
-  const { appointmentId } = req.body;
+  const { appointmentId } = req.query;
 
   try {
     const deletedAppointment = await deleteAppointmentById(appointmentId);

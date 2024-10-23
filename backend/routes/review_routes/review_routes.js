@@ -12,7 +12,7 @@ function ReviewRouterFun(
 ) {
   const router = Router();
   const reviewController = new ReviewController(ReviewModel);
-  //both
+  //public
   router.get("/", async (req, res, next) => {
     try {
       await reviewController.getAllReviews(req, res);
