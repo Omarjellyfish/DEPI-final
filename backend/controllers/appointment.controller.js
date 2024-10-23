@@ -13,7 +13,7 @@ import { deleteAppointmentById } from "../repositories/appointment.rep.js";
 
 export async function getAllAppointmentsDay(req, res) {
   const { year, month, day } = req.params;
-  console.log(req.params);
+  // console.log(req.params);
   try {
     const appointments = await findAllAppointmentsByDay(
       parseInt(year),
@@ -61,7 +61,7 @@ export async function getAllAppointmentsMonth(req, res) {
 }
 
 export async function createAppointment(req, res) {
-  let { userId } = req.query;
+  let userId = req.userId;
   let user = userId;
   const { year, month, day, timeSlot, service, cost, note } = req.body;
   try {
@@ -161,7 +161,7 @@ export async function getAvailableTimes(req, res) {
 
 export async function getUserAppointmentsController(req, res) {
   let userId = req.userId;
-  console.log("User ID:", userId);
+  // console.log("User ID:", userId);
 
   try {
     const appointments = await getUserAppointments(userId);
