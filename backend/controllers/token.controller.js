@@ -56,5 +56,9 @@ export default class TokenController {
     ).getPasetoUser(token);
     return user;
   }
+  async deleteUserToken(userID){
+    let user=await new this.tokenRepos(this.userModel,this.tokenModel,this.adminModel,this.next).deleteUserToken(userID);
+    return {};
+  }
 }
 // constructor(userModel,TokenModel = null, token = null,adminModel,next)
