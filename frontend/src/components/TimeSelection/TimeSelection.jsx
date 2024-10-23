@@ -11,9 +11,8 @@ const TimeSelection = ({
   const [currentMonthIndex, setCurrentMonthIndex] = useState(
     new Date().getMonth()
   );
-  const [availableTimes, setAvailableTimes] = useState({});
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [holidayMessage, setHolidayMessage] = useState("");
-  const [filteredTimes, setFilteredTimes] = useState([]);
   const dayContainerRef = useRef(null);
 
   const getDaysInMonth = (date) => {
@@ -50,22 +49,37 @@ const TimeSelection = ({
     }
   };
 
-  const handleDateSelection = (day) => {
+  const handleDateSelection = async (day) => {
     const selectedDateStr = day.toISOString().split("T")[0];
     const isFriday = day.getDay() === 5;
 
     if (isFriday) {
       setHolidayMessage("This day is a holiday (Friday). No available times.");
       setSelectedTime(null);
-      setFilteredTimes([]);
+      setAvailableTimes([]);
     } else {
       setHolidayMessage("");
       setSelectedDate(new Date(day));
+      await fetchAvailableTimes(day);
+    }
+  };
 
-      const availableTimesForSelectedDate =
-        availableTimes[selectedDateStr] || [];
+  const fetchAvailableTimes = async (day) => {
+    const year = day.getFullYear();
+    const month = day.getMonth() + 1;
+    const dayOfMonth = day.getDate();
+
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/appointments/available-times/",
+        {
+          params: { year: year, month: month, day: dayOfMonth },
+        }
+      );
+      setAvailableTimes(response.data.availableTimes || []);
       setSelectedTime(null);
-      setFilteredTimes(availableTimesForSelectedDate);
+    } catch (err) {
+      console.error("Error fetching available times:", err);
     }
   };
 
@@ -131,21 +145,21 @@ const TimeSelection = ({
       )}
 
       <div className="date-list mt-3">
-        {/* {filteredTimes.length > 0 ? (
-          filteredTimes.map((timeSlot) => (
+        {availableTimes.length > 0 ? (
+          availableTimes.map((timeSlot) => (
             <button
-              key={timeSlot.id}
+              key={timeSlot}
               className={`btn btn-light m-1 time-slot p-3 ${
-                selectedTime?.id === timeSlot.id ? "selected" : ""
+                selectedTime === timeSlot ? "selected" : ""
               }`}
               onClick={() => setSelectedTime(timeSlot)}
             >
-              {timeSlot.time}
+              {timeSlot}
             </button>
           ))
-        ) : ( */}
+        ) : (
           <div className="alert alert-info mt-3">No available times</div>
-        {/* )} */}
+        )}
       </div>
     </div>
   );
