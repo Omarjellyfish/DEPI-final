@@ -16,8 +16,8 @@ function Services() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get("/api/services");
-
+        const response = await axios.get("http://localhost:3000/services");
+        console.log(response.data,'hello from response data');
         if (Array.isArray(response.data)) {
           setServices(response.data);
           setFilteredServices(response.data);
@@ -107,7 +107,7 @@ function Services() {
                   <Service
                     key={index}
                     name={service.name}
-                    cost={`INR ${service.cost}`}
+                    cost={`USD ${service.cost}`}
                     selected={selectedServices.includes(service)}
                     onSelect={() => handleSelectService(service)}
                   />

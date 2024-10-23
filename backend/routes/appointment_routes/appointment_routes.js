@@ -15,7 +15,7 @@ import Admin from "../../models/admin.model.js";
 import TokenRepos from "../../repositories/token.rep.js";
 const AppointmentRoutes = express.Router();
 //public
-AppointmentRoutes.get("/available-times/:year/:month/:day", getAvailableTimes);
+AppointmentRoutes.get("/available-times", getAvailableTimes);
 //admin
 AppointmentRoutes.get("/month", getAllAppointmentsMonth);
 AppointmentRoutes.delete("/cancel", cancelAppointment);

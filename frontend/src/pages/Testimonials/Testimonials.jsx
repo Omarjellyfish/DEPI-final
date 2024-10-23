@@ -7,7 +7,6 @@ import "./Testimonials.css";
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({
-    user: "",
     review: "",
     rating: 5,
     title: "",
@@ -25,13 +24,14 @@ const Testimonials = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch("/api/reviews", {
+        const response = await fetch("http://localhost:3000/review", {
           headers: {
             "Content-Type": "application/json",
           },
         });
 
         const data = await isJSON(response);
+        console.log(data,'hell from data in testmonials');
         if (!data) {
           throw new Error("Invalid JSON response from server.");
         }
@@ -59,12 +59,13 @@ const Testimonials = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/reviews", {
+      const response = await fetch("http://localhost:3000/review", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newReview),
+        params: {userId:""} // will be changed to get user id from token
       });
 
       const data = await isJSON(response);

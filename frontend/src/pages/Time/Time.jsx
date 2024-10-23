@@ -15,15 +15,15 @@ const Time = () => {
       const year = selectedDate.getFullYear();
       const month = selectedDate.getMonth() + 1;
       const day = selectedDate.getDate();
-
       const response = await axios.get(
-        `http://localhost:5001/times/${year}/${month}/${day}`
+        `http://localhost:3000/appointments/available-times/`,{params:{year:year,month:month,day:day}}
       );
+      console.log(response.data,"hello from avaible times");
       setTimes(response.data.availableTimes);
     } catch (err) {
       console.error("Error fetching available times:", err);
     }
-  }, [selectedDate]);
+  }, []);
 
   const postBookingDetails = async () => {
     if (!selectedDate || !selectedTime) {

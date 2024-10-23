@@ -130,7 +130,7 @@ const allPossibleTimeSlots = [
 ];
 
 export async function getAvailableTimes(req, res) {
-  const { year, month, day } = req.params;
+  const { year, month, day } = req.query;
 
   try {
     const appointment = await Appointment.findOne({

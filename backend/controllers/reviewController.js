@@ -21,7 +21,8 @@ class ReviewController {
 
   async postReview(req, res) {
     console.log(req.typeUser);
-    let user = req.userId;
+    let { userId } = req.query;
+    let user = userId;
     const { review, rating, title } = req.body;
     try {
       await this.reviewRepo.addReview(user, title, review, rating);
