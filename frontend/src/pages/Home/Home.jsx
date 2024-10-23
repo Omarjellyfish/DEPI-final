@@ -45,33 +45,7 @@ function Home() {
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
-
-  const getDaysBetween = (start, end) => {
-    const daysOfWeek = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-
-    const startIndex = daysOfWeek.indexOf(start);
-    const endIndex = daysOfWeek.indexOf(end);
-
-    if (startIndex === -1 || endIndex === -1) return [];
-
-    if (startIndex <= endIndex) {
-      return daysOfWeek.slice(startIndex, endIndex + 1);
-    } else {
-      return [
-        ...daysOfWeek.slice(startIndex),
-        ...daysOfWeek.slice(0, endIndex + 1),
-      ];
-    }
-  };
-
+  
   useEffect(() => {
     axios
       .get("http://localhost:3000/workdays")
@@ -110,10 +84,7 @@ function Home() {
     checkBusinessStatus();
   }, []);
 
-  const workDaysRange = getDaysBetween(
-    workdays.startWorkDay,
-    workdays.endWorkDay
-  );
+
 
   return (
     <div className="landing pt-4 pb-4">
@@ -237,14 +208,14 @@ function Home() {
                     <>
                       Open
                       <span className="ms-1 text-muted dote">
-                        closes at 7:00 pm
+                        closes at 6:00 pm
                       </span>
                     </>
                   ) : (
                     <>
                       Closed
                       <span className="ms-1 text-muted dote">
-                        opens soon at 10:00 am
+                        opens soon at 09:00 am
                       </span>
                     </>
                   )}
@@ -285,7 +256,7 @@ function Home() {
             </div>
             <div className="col-md-3 flex-md-row flex-column text-center text-md-start">
               <p>Closed</p>
-              <p>10:00 am - 07:00 pm</p>
+              <p>09:00 am - 06:00 pm</p>
             </div>
             <div className="col-md-3 d-flex flex-md-row flex-column text-center text-md-start">
               <FontAwesomeIcon icon={faWallet} className="pe-3 pb-md-0 pb-3" />
