@@ -110,9 +110,7 @@ mongoose
     app.use("/workdays", workdaysRouter);
     app.use("/appointments", appointmentRoutes);
     function errorHandler(err, req, res, next) {
-      //console.log(err.message);
-      //console.log(err.res);
-      res.status(err.res.status);
+      res.status(200);
       res.send({ error: err.res.msgUser });
       //res.send({error:""});
     }

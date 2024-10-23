@@ -55,9 +55,16 @@ const Signup = () => {
 
     try {
       const response = await axios.post("http://localhost:3000/user/", data);
-      toast.success("Signed up successfully!", {
-        theme: "dark",
-      });
+
+      if (response.data.error) {
+        toast.error(response.data.error, {
+          theme: "dark",
+        });
+      } else {
+        toast.success("Signed up successfully!", {
+          theme: "dark",
+        });
+      }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
