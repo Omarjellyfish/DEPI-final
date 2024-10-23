@@ -26,8 +26,15 @@ const BookingDetails = ({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const handleNavigation = () => {
+
+  const handleNavigationreview = () => {
     navigate("/review");
+  };
+  const handleNavigationtime = () => {
+    navigate("/time");
+  };
+  const handleNavigationCash = () => {
+    navigate("/success");
   };
 
   const handlePayPalCheckout = async () => {
@@ -49,10 +56,13 @@ const BookingDetails = ({
         },
       ];
 
-      const response = await axios.post("http://localhost:3000/paypal/create-order", {
-        items,
-        cost: price,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/paypal/create-order",
+        {
+          items,
+          cost: price,
+        }
+      );
       window.location.href = response.data.approvalUrl;
     } catch (error) {
       console.error("Error creating PayPal order:", error);
@@ -65,6 +75,7 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
+    handleNavigationCash();
     if (isLoading) {
       return;
     }
@@ -83,10 +94,14 @@ const BookingDetails = ({
 
     try {
       // userId should be taken from token
-      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
-      if(response.data.error){
-        setMessage("There was an error creating your appointment. Please try again.");
-      }else{
+      const response = await axios.post("http://localhost:3000/appointments", {
+        ...appointmentData,
+      });
+      if (response.data.error) {
+        setMessage(
+          "There was an error creating your appointment. Please try again."
+        );
+      } else {
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
@@ -133,8 +148,8 @@ const BookingDetails = ({
       {showButtonNext && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={handleNavigation}
           disabled={nextButtonDisabled}
+          onClick={handleNavigationtime}
         >
           Next
           <FontAwesomeIcon icon={faArrowRight} className="arrow-icon ms-3" />
@@ -143,7 +158,7 @@ const BookingDetails = ({
       {showButtonBook && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={onNextClick}
+          onClick={handleNavigationreview}
           disabled={nextButtonDisabled}
         >
           Book Now

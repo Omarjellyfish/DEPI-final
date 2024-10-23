@@ -36,10 +36,9 @@ function Navbar() {
           className={`collapse navbar-collapse ${isCollapsed ? "show" : ""}`}
           id="navbarSupportedContent"
         >
-          
           <ul className="navbar-nav ms-lg-auto ps-3 mb-2 mb-lg-0 gap-md-3 gap-lg-4">
             <li className="nav-item">
-              <Link className="nav-link" to="/businesses">
+              <Link className="nav-link" to="/time">
                 For Businesses
               </Link>
             </li>
@@ -50,7 +49,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/testimonials">
-              Testimonials
+                Testimonials
               </Link>
             </li>
             <li className="nav-item">

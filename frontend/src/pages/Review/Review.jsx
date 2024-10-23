@@ -41,7 +41,7 @@ function Review() {
               price="900"
               dateTime="Sun 16 July 2023 at 5:00pm"
               duration="1h duration, ends at 6:00pm"
-              showButtonBook={true}
+              showButtonBook={false}
               showButtonPayPal={true}
               showButtonCash={true}
             />
