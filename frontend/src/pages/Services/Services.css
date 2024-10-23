@@ -1,0 +1,42 @@
+.fa-check {
+  background-color: white;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: white;
+  border: 1px solid #ffa101;
+}
+
+.fa-check:active,
+.fa-check:hover,
+[data-service="selected"] .fa-check {
+  background-color: #ffa101;
+}
+.therapy {
+  background-color: #ffa101;
+  color: white;
+  width: fit-content;
+}
+
+.service:hover {
+  background-color: #f7f8fa;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.service:hover .fa-check {
+  background-color: #ffa101;
+}
+
+.service,
+.fa-check {
+  cursor: pointer;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
