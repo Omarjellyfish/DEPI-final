@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./BookingDetails.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { SelectedServicesContext } from "../../context/SelectedServicesContext"; // Import the context
+
 const BookingDetails = ({
   location,
-  service,
-  price,
   duration,
   dateTime,
   showDateTime,
@@ -26,6 +26,14 @@ const BookingDetails = ({
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  // Fetch selected services and total price from context
+  const { selectedServices } = useContext(SelectedServicesContext);
+  const service =
+    selectedServices.map((s) => s.name).join(", ") || "No Service";
+  const price =
+    selectedServices.reduce((total, s) => total + s.cost, 0) || 0;
+
   const handleNavigation = () => {
     navigate("/review");
   };
@@ -40,7 +48,7 @@ const BookingDetails = ({
       const items = [
         {
           name: service,
-          description: `${service}`,
+          description: service,
           quantity: 1,
           unit_amount: {
             currency_code: "USD",
@@ -49,10 +57,13 @@ const BookingDetails = ({
         },
       ];
 
-      const response = await axios.post("http://localhost:3000/paypal/create-order", {
-        items,
-        cost: price,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/paypal/create-order",
+        {
+          items,
+          cost: price,
+        }
+      );
       window.location.href = response.data.approvalUrl;
     } catch (error) {
       console.error("Error creating PayPal order:", error);
@@ -82,11 +93,14 @@ const BookingDetails = ({
     };
 
     try {
-      // userId should be taken from token
-      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
-      if(response.data.error){
-        setMessage("There was an error creating your appointment. Please try again.");
-      }else{
+      const response = await axios.post("http://localhost:3000/appointments", {
+        ...appointmentData,
+      });
+      if (response.data.error) {
+        setMessage(
+          "There was an error creating your appointment. Please try again."
+        );
+      } else {
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
@@ -152,9 +166,7 @@ const BookingDetails = ({
       )}
       {showButtonPayPal && (
         <button
-          className={`btn ${
-            isLoading ? "btn-secondary" : "btn-primary"
-          } w-100 mt-3`}
+          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
           onClick={handlePayPalCheckout}
           disabled={nextButtonDisabled || isLoading}
         >
@@ -163,9 +175,7 @@ const BookingDetails = ({
       )}
       {showButtonCash && (
         <button
-          className={`btn ${
-            isLoading ? "btn-secondary" : "btn-primary"
-          } w-100 mt-3`}
+          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
           onClick={handleCashCheckout}
           disabled={nextButtonDisabled || isLoading}
         >

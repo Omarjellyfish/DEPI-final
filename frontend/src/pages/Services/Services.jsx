@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Service from "../../components/Service/Service";
 import BookingDetails from "../../components/BookingDetails/BookingDetails";
 import "./Services.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { SelectedServicesContext } from "../../context/SelectedServicesContext";
 
 function Services() {
   const [services, setServices] = useState([]);
   const [filteredServices, setFilteredServices] = useState([]);
-  const [selectedServices, setSelectedServices] = useState([]);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const { selectedServices, setSelectedServices } = useContext(SelectedServicesContext);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get("http://localhost:3000/services");
-        // console.log(response.data,'hello from response data');
         if (Array.isArray(response.data)) {
           setServices(response.data);
           setFilteredServices(response.data);
@@ -50,24 +50,6 @@ function Services() {
     setFilteredServices(filtered);
   };
 
-  const sendSelectedServicesToBackend = async () => {
-    try {
-      const response = await axios.post(
-        "/api/selected-services",
-        selectedServices
-      );
-
-      if (response.status !== 200) {
-        throw new Error("Failed to send selected services");
-      }
-
-      alert("Selected services sent successfully!");
-    } catch (err) {
-      console.error(err);
-      alert("Error sending selected services");
-    }
-  };
-
   return (
     <div className="services bg-light">
       <div className="container pt-5">
@@ -76,7 +58,6 @@ function Services() {
         <div className="container">
           <div className="row align-items-center">
             <h3 className="col-md-3 fw-bold me-4 mt-3">Select services</h3>
-
             <form
               action="#"
               className="col-md-6 ms-3 d-flex position-relative flex-grow-1 flex-lg-grow-0 mb-3 mb-lg-0"
@@ -121,23 +102,13 @@ function Services() {
           <div className="col-md-3 pt-3 pt-md-0">
             <BookingDetails
               location="Vurve - Shara"
-              service={
-                selectedServices.map((s) => s.name).join(", ") || "No Service"
-              }
-              price={
-                selectedServices.reduce((total, s) => total + s.cost, 0) || "0"
-              }
+              service={selectedServices.map((s) => s.name).join(", ") || "No Service"}
+              price={selectedServices.reduce((total, s) => total + s.cost, 0) || "0"}
               dateTime="Sun 16 July 2023 at 5:00pm"
               duration="1h"
               showDateTime={false}
-              showButtonNext={true}
+              showButtonNext={true} // Keep the "Next" button here
             />
-            <button
-              onClick={sendSelectedServicesToBackend}
-              className="btn btn-primary mt-3"
-            >
-              Proceed with Selected Services
-            </button>
           </div>
         </div>
       </div>
