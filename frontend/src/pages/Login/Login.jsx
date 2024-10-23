@@ -94,13 +94,13 @@ const Login = () => {
 
         <div className="col-md-6 d-flex align-items-center justify-content-center right-section p-5">
           <div className="card form-card-parent p-4 shadow-lg border-0">
-            <h2 className="text-center mb-5 form-title">
+            <h2 className="text-center mb-4 form-title">
               Log In to EasyReserve™
             </h2>
 
             <form onSubmit={handleSubmit}>
               {error && <div className="alert alert-danger">{error}</div>}
-              <div className="mb-5">
+              <div className="mb-3">
                 <label htmlFor="email" className="form-label email">
                   Your Email
                 </label>
@@ -119,7 +119,7 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="mb-5">
+              <div className="mb-3">
                 <label htmlFor="password" className="form-label password">
                   Your Password
                 </label>
@@ -138,6 +138,22 @@ const Login = () => {
                 </div>
               </div>
 
+              <div className="d-flex flex-column justify-content-between align-items-center my-4">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-50 mb-2"
+                  disabled={loading}
+                >
+                  {loading ? "Logging In..." : "Log In as admin"}
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-50 mb-0"
+                  disabled={loading}
+                >
+                  {loading ? "Logging In..." : "Log In as user"}
+                </button>
+              </div>
               <p className="text-center mt-3 dont-have">
                 Don't have an account?{" "}
                 <Link to="/signup" className="signup-word">
