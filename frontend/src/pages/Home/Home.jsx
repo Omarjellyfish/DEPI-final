@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Home.css";
 import { Link } from "react-router-dom";
@@ -14,13 +15,12 @@ import {
 function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   const [workdays, setWorkdays] = useState({
     startWorkDay: "",
     endWorkDay: "",
   });
-
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   const images = [
     "images/num-one.jpg",
@@ -45,15 +45,13 @@ function Home() {
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
   };
-  
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/workdays")
       .then((response) => {
         const data = response.data;
-        console.log(response.data[0].startWorkDay,'hello form work day');
         if (data && data[0].startWorkDay && data[0].endWorkDay) {
-
           setWorkdays({
             startWorkDay: data[0].startWorkDay,
             endWorkDay: data[0].endWorkDay,
@@ -84,7 +82,14 @@ function Home() {
     checkBusinessStatus();
   }, []);
 
-
+  const handleBookNowClick = () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/services");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="landing pt-4 pb-4">
@@ -186,7 +191,12 @@ function Home() {
               <h4 className="fw-bold">FlexiHealth</h4>
               <div className="d-flex">
                 <button className="btn btn-enquire me-2">Enquire</button>
-                <button className="btn btn-book-now">Book now</button>
+                <button
+                  className="btn btn-book-now"
+                  onClick={handleBookNowClick}
+                >
+                  Book now
+                </button>
               </div>
             </div>
             <div className="info-shop d-flex pt-3">
@@ -246,12 +256,14 @@ function Home() {
             <div className="col-md-3 d-flex flex-md-row flex-column text-center text-md-start">
               <FontAwesomeIcon icon={faClock} className="pe-3 pb-md-0 pb-3" />
               <div>
-              {workdays.startWorkDay && workdays.endWorkDay ? (
-  <p>Starting from: {workdays.startWorkDay}<br></br> to: {workdays.endWorkDay}</p>
-) : (
-  <p>No workdays available</p>
-)}
-
+                {workdays.startWorkDay && workdays.endWorkDay ? (
+                  <p>
+                    Starting from: {workdays.startWorkDay}
+                    <br></br> to: {workdays.endWorkDay}
+                  </p>
+                ) : (
+                  <p>No workdays available</p>
+                )}
               </div>
             </div>
             <div className="col-md-3 flex-md-row flex-column text-center text-md-start">
