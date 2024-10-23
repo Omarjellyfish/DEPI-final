@@ -1,4 +1,4 @@
-import ErrorCustome from "../utilities/error.js";
+import ErrorCustome from "../utilities/error.js"
 const routes_admin={"/service":["*"],"/admin":["*"],
     '/appointments/day':["get"],
     '/appointments/month':["get"],
