@@ -33,7 +33,7 @@ const Time = () => {
                 selectedTime ? selectedTime : "not selected"
               }`}
               showDateTime={!!selectedTime}
-              showButtonNext={true}
+              showButtonBook={true}
               nextButtonDisabled={!selectedTime || !selectedDate}
             />
             {message && <div className="alert alert-info mt-3">{message}</div>}

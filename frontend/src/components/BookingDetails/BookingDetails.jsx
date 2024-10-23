@@ -37,6 +37,12 @@ const BookingDetails = ({
   const handleNavigation = () => {
     navigate("/review");
   };
+  const handleNavigationtime = () => {
+    navigate("/time");
+  };
+  const handleNavigationCash = () => {
+    navigate("/success");
+  };
 
   const handlePayPalCheckout = async () => {
     if (isLoading) return;
@@ -76,6 +82,7 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
+    handleNavigationCash();
     if (isLoading) {
       return;
     }
@@ -93,14 +100,11 @@ const BookingDetails = ({
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/appointments", {
-        ...appointmentData,
-      });
-      if (response.data.error) {
-        setMessage(
-          "There was an error creating your appointment. Please try again."
-        );
-      } else {
+      // userId should be taken from token
+      const response = await axios.post("http://localhost:3000/appointments", {...appointmentData});
+      if(response.data.error){
+        setMessage("There was an error creating your appointment. Please try again.");
+      }else{
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
@@ -147,8 +151,8 @@ const BookingDetails = ({
       {showButtonNext && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={handleNavigation}
           disabled={nextButtonDisabled}
+          onClick={handleNavigationtime}
         >
           Next
           <FontAwesomeIcon icon={faArrowRight} className="arrow-icon ms-3" />
@@ -157,7 +161,7 @@ const BookingDetails = ({
       {showButtonBook && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={onNextClick}
+          onClick={handleNavigationreview}
           disabled={nextButtonDisabled}
         >
           Book Now

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +14,7 @@ const Signup = () => {
   const [acceptTerms, setAcceptTerms] = useState(false);
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Za-z]).{8,16}$/;
@@ -64,6 +65,7 @@ const Signup = () => {
         toast.success("Signed up successfully!", {
           theme: "dark",
         });
+        navigate("/login");
       }
     } catch (error) {
       const errorMessage =

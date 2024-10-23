@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Login.css";
-import { Link } from "react-router-dom";
-import axios, { AxiosHeaders } from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +12,7 @@ const Login = () => {
   const [remember, setRemember] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const validateForm = () => {
     if (!email || !password) {
@@ -32,7 +33,7 @@ const Login = () => {
     return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, isAdmin) => {
     e.preventDefault();
     if (!validateForm()) return;
 
@@ -53,8 +54,17 @@ const Login = () => {
       const refresh = response.data.refresh;
       console.log(token, refresh);
 
+      localStorage.setItem("token", token);
+      localStorage.setItem("refresh", refresh);
+
       toast.success("Login successful!");
       console.log("Login successful:", response.data);
+
+      if (isAdmin) {
+        navigate("/dashboard");
+      } else {
+        navigate("/services");
+      }
     } catch (error) {
       if (error.response) {
         setError(
@@ -98,7 +108,7 @@ const Login = () => {
               Log In to EasyReserve™
             </h2>
 
-            <form onSubmit={handleSubmit}>
+            <form>
               {error && <div className="alert alert-danger">{error}</div>}
               <div className="mb-3">
                 <label htmlFor="email" className="form-label email">
@@ -142,6 +152,7 @@ const Login = () => {
                 <button
                   type="submit"
                   className="btn btn-primary w-50 mb-2"
+                  onClick={(e) => handleSubmit(e, true)}
                   disabled={loading}
                 >
                   {loading ? "Logging In..." : "Log In as admin"}
@@ -149,6 +160,7 @@ const Login = () => {
                 <button
                   type="submit"
                   className="btn btn-primary w-50 mb-0"
+                  onClick={(e) => handleSubmit(e, false)}
                   disabled={loading}
                 >
                   {loading ? "Logging In..." : "Log In as user"}
