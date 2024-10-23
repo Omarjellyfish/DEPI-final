@@ -27,7 +27,7 @@ import UserRouterFun from "./routes/user_routes/user_routes.js";
 import WorkDaysFunc from "./routes/workdays_routes/workdays.routes.js";
 dotenv.config();
 mongoose
-  .connect('mongodb://localhost/dentalDatabase', {})
+  .connect(process.env.CONNECTION_STRING, {})
   .then(() => {
     console.log("Connected to MongoDB");
     let userRouter = UserRouterFun(
@@ -68,7 +68,18 @@ mongoose
       Admin,
       TokenRepos
     );
-    let tokenRoute=TokenRouteFunc(User, Admin,TokenRepos,TokenController,Token,BasicAuthMiddleware,AdminRepos,UserRepos,CustomePasetoMiddleWare,CheckPermission);
+    let tokenRoute = TokenRouteFunc(
+      User,
+      Admin,
+      TokenRepos,
+      TokenController,
+      Token,
+      BasicAuthMiddleware,
+      AdminRepos,
+      UserRepos,
+      CustomePasetoMiddleWare,
+      CheckPermission
+    );
 
     let appointmentRoutes = AppointmentRoutes;
     let serviceRouter = ServiceRouterFun(
