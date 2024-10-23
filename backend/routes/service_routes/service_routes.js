@@ -12,6 +12,7 @@ export default function ServiceRouterFun(
 ) {
   const router = Router();
   const serviceController = new ServiceController(Service);
+  //public
   router.get("/", async (req, res, next) => {
     try {
       await serviceController.getAllServices(req, res);
@@ -34,20 +35,10 @@ export default function ServiceRouterFun(
     CheckPermission(req, res, next);
   });
 
-  //both
-
   //admin
   router.delete("/delete-service", async (req, res, next) => {
     try {
       await serviceController.deleteService(req, res);
-    } catch (error) {
-      next(error);
-    }
-  });
-  //admin
-  router.post("/", async (req, res, next) => {
-    try {
-      await serviceController.addService(req, res);
     } catch (error) {
       next(error);
     }
@@ -60,6 +51,13 @@ export default function ServiceRouterFun(
       next(error);
     }
   });
-
+  //admin
+  router.post("/", async (req, res, next) => {
+    try {
+      await serviceController.addService(req, res);
+    } catch (error) {
+      next(error);
+    }
+  });
   return router;
 }

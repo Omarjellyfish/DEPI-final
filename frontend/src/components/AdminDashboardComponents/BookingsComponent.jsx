@@ -6,20 +6,25 @@ import { toast } from "react-toastify";
 const BookingsComponent = () => {
   const [bookings, setBookings] = useState([]);
   const [filteredBookings, setFilteredBookings] = useState([]);
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [month, setMonth] = useState(10);
+  const [year, setYear] = useState(2024);
 
-  useEffect(() => {
+  const fetchBookings = () => {
     axios
-      .get("http://localhost:5001/bookings")
+      .get(`http://localhost:3000/appointments/month/`, {
+        params: {
+          year: year,
+          month: month,
+        },
+      })
       .then((response) => {
-        setBookings(response.data);
-        setFilteredBookings(response.data);
+        console.log(response.data.appointments, "hello from appointments");
+        setBookings(response.data.appointments);
       })
       .catch((error) => {
         console.error("Error fetching bookings:", error);
       });
-  }, []);
+  };
 
   const fetchFilteredBookings = () => {
     const filtered = bookings.filter((booking) => {
@@ -33,7 +38,7 @@ const BookingsComponent = () => {
 
   const handleCancelBooking = (bookingId) => {
     axios
-      .delete(`http://localhost:5001/bookings/${bookingId}`)
+      .delete(`http://localhost:3000/appointments/cancel`,{params:{appointmentId:bookingId}})
       .then(() => {
         setBookings(bookings.filter((booking) => booking.id !== bookingId));
         setFilteredBookings(
@@ -77,24 +82,25 @@ const BookingsComponent = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" onClick={fetchBookings}>
           Fetch Bookings
         </button>
       </form>
 
       <div className="row mt-4">
-        {filteredBookings.length > 0 ? (
-          filteredBookings.map((booking) => (
-            <div className="col-md-3 mb-3 d-flex flex-column" key={booking.id}>
+        {bookings.length > 0 ? (
+          bookings.map((booking) => (
+            <div className="col-md-3 mb-3 d-flex flex-column" key={booking._id}>
+              {console.log(booking._id)}
               <Booking
-                bookerName={booking.bookerName}
-                service={booking.service}
-                bookingDate={booking.bookingDate}
-                bookingTime={booking.bookingTime}
+                bookerName={booking.months.days.times.appointment.user}
+                service={booking.months.days.times.appointment.service}
+                bookingDate={booking.months.days.times.appointment.date}
+                cost={booking.months.days.times.appointment.cost}
               />
               <button
                 className="btn btn-danger mt-2"
-                onClick={() => handleCancelBooking(booking.id)}
+                onClick={() => handleCancelBooking(booking._id)}
               >
                 Cancel
               </button>
