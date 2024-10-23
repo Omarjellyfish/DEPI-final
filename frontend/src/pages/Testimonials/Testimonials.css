@@ -1,0 +1,71 @@
+.testimonials-section {
+  background-color: #4b2d83;
+  color: #fff;
+  padding: 40px;
+  min-height: calc(100vh - 112px);
+}
+
+.testimonial-card {
+  background-color: #282844;
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-rating {
+  font-size: 1.5rem;
+}
+
+.rating-value {
+  font-weight: bold;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+}
+
+.author-info h6 {
+  color: #fff;
+}
+
+.author-info small {
+  color: #ccc;
+}
+
+.testimonial-card img {
+  border-radius: 50%;
+}
+
+.form-control-testimonials {
+  max-width: 450px;
+}
+
+.form-group-parent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.our-customers,
+.submit-your-review {
+  color: #ffa101;
+}
+
+.rating-num {
+  max-width: 200px;
+}
+
+.form-card-testimonials{
+  max-width: 420px !important;
+}
+
+.testi-name,.testi-title,.testi-review,.testi-rating{
+  color: white;
+}
+
+.submit-review-btn{
+  width: fit-content;
+  padding: 0.5rem 1.5rem;
+}
