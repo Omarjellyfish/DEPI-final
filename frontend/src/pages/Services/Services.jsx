@@ -129,7 +129,7 @@ function Services() {
               }
               dateTime="Sun 16 July 2023 at 5:00pm"
               duration="1h"
-              showDateTime={true}
+              showDateTime={false}
               showButtonNext={true}
             />
             <button
