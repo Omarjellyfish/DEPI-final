@@ -43,7 +43,7 @@ class AdminRepos{
         
             let admin=await new this.Admin({email:email,password:password,name:name,phone:phone});
           //console.log(await this.Admin.find({email:email}))
-          let err=   await admin.validateSync();
+          let err= admin.validateSync();
           //console.log(err);``
           if(err!=null){
            let message=getErrorSchema(err);
@@ -51,6 +51,7 @@ class AdminRepos{
            console.log("tell me go");
            console.log("hell");
            err1.res=new ErrorCustome(message,"admin",400)
+           console.log("juuiiiiiiiiiiiiiiiiii")
            this.next(err1);
            return;
           }

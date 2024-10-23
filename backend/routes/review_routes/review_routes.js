@@ -12,6 +12,14 @@ function ReviewRouterFun(
 ) {
   const router = Router();
   const reviewController = new ReviewController(ReviewModel);
+  router.use(async(req,res,next)=>{
+    
+    CustomePasetoMiddleWare(req, res, next, TokenController,userModel, adminModel,tokenRepos)
+  })
+  router.use(async(req,res,next)=>{
+    
+    CheckPermission(req, res, next);
+  });
   //public
   router.get("/", async (req, res, next) => {
     try {

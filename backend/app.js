@@ -27,7 +27,7 @@ import UserRouterFun from "./routes/user_routes/user_routes.js";
 import WorkDaysFunc from "./routes/workdays_routes/workdays.routes.js";
 dotenv.config();
 mongoose
-  .connect(process.env.CONNECTION_STRING, {})
+  .connect("mongodb://127.0.0.1:27017/dentialDatabase", {})
   .then(() => {
     console.log("Connected to MongoDB");
     let userRouter = UserRouterFun(
