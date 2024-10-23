@@ -12,11 +12,17 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [acceptTerms, setAcceptTerms] = useState(false);
+  const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
 
   const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Za-z]).{8,16}$/;
     return passwordRegex.test(password);
+  };
+
+  const validatePhone = (phone) => {
+    const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneRegex.test(phone);
   };
 
   const handleSubmit = async (e) => {
@@ -32,6 +38,10 @@ const Signup = () => {
       );
       return;
     }
+    if (!validatePhone(phone)) {
+      setError("Phone number must be in the format 000-000-0000.");
+      return;
+    }
 
     setError("");
 
@@ -39,14 +49,12 @@ const Signup = () => {
       name,
       email,
       password,
+      phone,
       acceptTerms,
     };
 
     try {
-      const response = await axios.post(
-        "https://your-backend-api/signup",
-        data
-      );
+      const response = await axios.post("http://localhost:3000/user/", data);
       toast.success("Signed up successfully!", {
         theme: "dark",
       });
@@ -108,6 +116,30 @@ const Signup = () => {
                     <i className="fa-solid fa-envelope"></i>
                   </span>
                 </div>
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="phone" className="form-label Label">
+                  Your Phone Number
+                </label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control form-control-signup"
+                    id="phone"
+                    placeholder="123-456-7890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    pattern="\d{3}-\d{3}-\d{4}"
+                  />
+                  <span className="input-group-text">
+                    <i className="fa-solid fa-phone"></i>
+                  </span>
+                </div>
+                {error.includes("Phone number") && (
+                  <p className="text-danger mt-1">{error}</p>
+                )}
               </div>
 
               <div className="mb-3">
