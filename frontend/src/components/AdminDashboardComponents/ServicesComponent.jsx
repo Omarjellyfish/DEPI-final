@@ -6,15 +6,13 @@ const ServicesComponent = () => {
   const [serviceName, setServiceName] = useState("");
   const [servicePrice, setServicePrice] = useState("");
   const [services, setServices] = useState([]);
-  const [editServiceId, setEditServiceId] = useState(null);
+  const [editServiceName, setEditServiceName] = useState(null);
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/services")
       .then((response) => {
-        console.log(response,'hello from response');
         setServices(response.data);
-        console.log(services,'hello from services');
       })
       .catch((error) => {
         console.error("Error fetching services:", error);
@@ -28,19 +26,19 @@ const ServicesComponent = () => {
       cost: servicePrice,
     };
 
-    if (editServiceId) {
+    if (editServiceName) {
       axios
         .put(`http://localhost:3000/services`, newService)
         .then((response) => {
           setServices(
             services.map((service) =>
-              service.id === editServiceId ? response.data : service
+              service.name === editServiceName ? response.data : service
             )
           );
           toast.success("Service updated successfully!");
           setServiceName("");
           setServicePrice("");
-          setEditServiceId(null);
+          setEditServiceName(null);
         })
         .catch((error) => {
           console.error("Error updating service:", error);
@@ -62,11 +60,12 @@ const ServicesComponent = () => {
     }
   };
 
-  const handleDeleteService = (serviceId) => {
+  const handleDeleteService = (serviceName) => {
+    console.log("Deleting service:", serviceName);
     axios
-      .delete(`http://localhost:3000/services`)
+      .delete(`http://localhost:3000/services`, { data: { name: serviceName } })
       .then(() => {
-        setServices(services.filter((service) => service.id !== serviceId));
+        setServices(services.filter((service) => service.name !== serviceName));
         toast.success("Service deleted successfully!");
       })
       .catch((error) => {
@@ -75,12 +74,14 @@ const ServicesComponent = () => {
       });
   };
 
-  const handleUpdateService = (serviceId) => {
-    const serviceToEdit = services.find((service) => service.name === serviceId);
+  const handleUpdateService = (serviceName) => {
+    const serviceToEdit = services.find(
+      (service) => service.name === serviceName
+    );
     if (serviceToEdit) {
       setServiceName(serviceToEdit.name);
       setServicePrice(serviceToEdit.cost);
-      setEditServiceId(serviceId);
+      setEditServiceName(serviceToEdit.name);
     }
   };
 
@@ -108,7 +109,7 @@ const ServicesComponent = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary">
-          {editServiceId ? "Update Service" : "Add Service"}
+          {editServiceName ? "Update Service" : "Add Service"}
         </button>
       </form>
 
@@ -123,13 +124,13 @@ const ServicesComponent = () => {
             <div>
               <button
                 className="btn btn-warning btn-sm me-2"
-                onClick={() => handleUpdateService(service.id)}
+                onClick={() => handleUpdateService(service.name)}
               >
                 Edit
               </button>
               <button
                 className="btn btn-danger btn-sm"
-                onClick={() => handleDeleteService(service.id)}
+                onClick={() => handleDeleteService(service.name)}
               >
                 Delete
               </button>
