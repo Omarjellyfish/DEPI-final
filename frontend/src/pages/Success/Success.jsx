@@ -106,9 +106,9 @@ function Success() {
                   showButtonCash={false}
                 />
               </div>
-              <div class="cancellation-policy rounded mt-5 mx-2 p-2">
-                <h3 class="fs-6 fw-bold">Cancellation policy</h3>
-                <p class="fs-6 text-muted w-50">
+              <div className="cancellation-policy rounded mt-5 mx-2 p-2">
+                <h3 className="fs-6 fw-bold">Cancellation policy</h3>
+                <p className="fs-6 text-muted w-50">
                   Cancel for free anytime in advance, otherwise you will be
                   charged<strong> 100%</strong> of the service price for not
                   showing up.
