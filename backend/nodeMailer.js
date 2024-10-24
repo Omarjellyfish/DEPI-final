@@ -5,12 +5,10 @@ const pass = process.env.NODEMAILER_PASS;
 const email = process.env.NODEMAILER_EMAIL;
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.office365.com",
-  port: 465,
-  secure: true,
+  service: "gmail", // Use Gmail service
   auth: {
-    user: `${email}`,
-    pass: `${pass}`,
+    user: process.env.TRAIL_MAIL, // Your Gmail address
+    pass: process.env.TRAIL_PASSWORD, // Your Gmail password (use App Password if 2FA is enabled)
   },
 });
 
@@ -24,10 +22,10 @@ const confirmationEmailTemplate = (name, service, datetime) => `
   <p>Your booking for the <strong>${service}</strong> service on <strong>${datetime}</strong> has been successfully confirmed.</p>
 `;
 
-const cancellationEmailTemplate = (name, service, datetime) => `
+const cancellationEmailTemplate = (name) => `
   <h1>Cancellation Email</h1>
   <p>Dear ${name},</p>
-  <p>We regret to inform you that your booking for the <strong>${service}</strong> service on <strong>${datetime} has been canceled</strong>.</p>
+  <p>We regret to inform you that your booking for the <strong></strong> service has been canceled</strong>.</p>
 `;
 
 async function sendEmail(to, subject, htmlContent) {
@@ -45,6 +43,7 @@ async function sendEmail(to, subject, htmlContent) {
 }
 
 async function sendConfirmationEmail(to, name, service, datetime) {
+  console.log("hello from send confirmation email");
   const subject = "Booking Confirmation";
   const htmlContent = confirmationEmailTemplate(name, service, datetime);
   await sendEmail(to, subject, htmlContent);
@@ -61,3 +60,4 @@ async function sendOTPEmail(to, name, OTP) {
   const htmlContent = confirmEmailAdressTemplate(name, OTP);
   await sendEmail(to, subject, htmlContent);
 }
+export { sendConfirmationEmail, sendCancellationEmail };

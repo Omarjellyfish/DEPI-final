@@ -22,6 +22,9 @@ export default async function CustomePasetoMiddleWare(
     req.typeUser = result.type;
     req.nameUser = result.name;
     req.userId = result.tokenModel._id;
+    req.userEmail = result.tokenModel.email;
+    req.userName = result.tokenModel.name;
+    console.log(req.userEmail[0], "hello from token model");
     next();
     return;
   }
