@@ -20,6 +20,13 @@ function ReviewRouterFun(
       next(error); //implement your error custom
     }
   });
+  router.post("/", async (req, res, next) => {
+    try {
+      await reviewController.postReview(req, res);
+    } catch (error) {
+      next(error); //implement your error custom
+    }
+  });
   router.use(async (req, res, next) => {
     CustomePasetoMiddleWare(
       req,
@@ -36,13 +43,6 @@ function ReviewRouterFun(
   });
 
   //user
-  router.post("/", async (req, res, next) => {
-    try {
-      await reviewController.postReview(req, res);
-    } catch (error) {
-      next(error); //implement your error custom
-    }
-  });
 
   return router;
 }

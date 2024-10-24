@@ -10,13 +10,14 @@ const BookingsComponent = () => {
   const [year, setYear] = useState(2024);
 
   const fetchBookings = () => {
-    axios
-      .get(`http://localhost:3000/appointments/month/`, {
-        params: {
-          year: year,
-          month: month,
-        },
-      })
+    console.log(year,month,'hello from fetch bookings');
+    axios.get(`http://localhost:3000/appointments/month/`, {
+      headers: {
+        "token": localStorage.getItem("token"),
+        "year": year,
+        "month": month,
+      },
+    })    
       .then((response) => {
         console.log(response.data.appointments, "hello from appointments");
         setBookings(response.data.appointments);
@@ -37,8 +38,9 @@ const BookingsComponent = () => {
   };
 
   const handleCancelBooking = (bookingId) => {
+    console.log("hello from booking id",bookingId);
     axios
-      .delete(`http://localhost:3000/appointments/cancel`,{params:{appointmentId:bookingId}})
+      .delete(`http://localhost:3000/appointments/cancel`,{headers:{"token":localStorage.getItem("token"), "appointmentId":bookingId}})
       .then(() => {
         setBookings(bookings.filter((booking) => booking.id !== bookingId));
         setFilteredBookings(

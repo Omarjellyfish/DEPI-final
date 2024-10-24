@@ -8,7 +8,7 @@ const WorkdaysComponent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/workdays")
+      .get("http://localhost:3000/workdays",{headers:{"token":localStorage.getItem("token")}})
       .then((response) => {
         const { startWorkDay, endWorkDay } = response.data[0];
         console.log(startWorkDay,endWorkDay , 'hello from this');
@@ -27,7 +27,23 @@ const WorkdaysComponent = () => {
     };
 
     axios
-      .put("http://localhost:3000/workdays", updatedDays)
+      .put("http://localhost:3000/workdays", updatedDays,{headers:{"token":localStorage.getItem("token")}})
+      .then(() => {
+        toast.success("Clinic Days updated successfully!");
+      })
+      .catch((error) => {
+        console.error("Error updating clinic Days:", error);
+        toast.error("Failed to update clinic Days!");
+      });
+  };
+  const handleWorkdaysSubmit_end = (e) => {
+    e.preventDefault();
+    const updatedDays = {  // "key": , "value":
+      "key": "endWorkDay" ,"value":endWorkDay,
+    };
+
+    axios
+      .put("http://localhost:3000/workdays", updatedDays,{headers:{"token":localStorage.getItem("token")}})
       .then(() => {
         toast.success("Clinic Days updated successfully!");
       })
@@ -75,8 +91,10 @@ const WorkdaysComponent = () => {
           </select>
         </div>
         <button type="submit" className="btn btn-primary">
-          Update Workdays
+          Update Start Work Days
         </button>
+        <br></br><br></br>
+        <button className="btn btn-primary" onClick={handleWorkdaysSubmit_end}>Update End Work Day</button>
       </form>
     </div>
   );

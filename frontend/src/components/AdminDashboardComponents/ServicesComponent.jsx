@@ -10,7 +10,7 @@ const ServicesComponent = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/services")
+      .get("http://localhost:3000/services",{headers:{"token":localStorage.getItem("token")}})
       .then((response) => {
         setServices(response.data);
       })
@@ -31,7 +31,7 @@ const ServicesComponent = () => {
     }
     if (editServiceName) {
       axios
-        .put(`http://localhost:3000/services/update-service`, updateService)
+        .put(`http://localhost:3000/services/update-service`, updateService,{headers:{"token":localStorage.getItem("token")}})
         .then((response) => {
           setServices(
             services.map((service) =>
@@ -49,7 +49,7 @@ const ServicesComponent = () => {
         });
     } else {
       axios
-        .post("http://localhost:3000/services", newService)
+        .post("http://localhost:3000/services", newService,{headers:{"token":localStorage.getItem("token")}})
         .then((response) => {
           setServices([...services, response.data]);
           toast.success("Service added successfully!");
@@ -65,8 +65,12 @@ const ServicesComponent = () => {
 
   const handleDeleteService = (serviceName) => {
     console.log("Deleting service:", serviceName);
-    axios
-      .delete(`http://localhost:3000/services/delete-service`, { data: { name: serviceName } })
+    axios.delete(`http://localhost:3000/services/delete-service`, {
+      headers: {
+        "token": localStorage.getItem("token"),
+        "name": serviceName
+      }
+    })
       .then(() => {
         setServices(services.filter((service) => service.name !== serviceName));
         toast.success("Service deleted successfully!");

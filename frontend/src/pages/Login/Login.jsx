@@ -151,19 +151,11 @@ const Login = () => {
               <div className="d-flex flex-column justify-content-between align-items-center my-4">
                 <button
                   type="submit"
-                  className="btn btn-primary w-50 mb-2"
-                  onClick={(e) => handleSubmit(e, true)}
-                  disabled={loading}
-                >
-                  {loading ? "Logging In..." : "Log In as admin"}
-                </button>
-                <button
-                  type="submit"
                   className="btn btn-primary w-50 mb-0"
                   onClick={(e) => handleSubmit(e, false)}
                   disabled={loading}
                 >
-                  {loading ? "Logging In..." : "Log In as user"}
+                  {loading ? "Logging In..." : "Log In"}
                 </button>
               </div>
               <p className="text-center mt-3 dont-have">

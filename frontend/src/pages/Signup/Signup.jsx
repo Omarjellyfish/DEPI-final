@@ -26,9 +26,7 @@ const Signup = () => {
     return phoneRegex.test(phone);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async (route) => {
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
       return;
@@ -55,7 +53,7 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/user/", data);
+      const response = await axios.post(`http://localhost:3000/${route}`, data);
 
       if (response.data.error) {
         toast.error(response.data.error, {
@@ -77,6 +75,16 @@ const Signup = () => {
     }
   };
 
+  const handleAdminSignup = (e) => {
+    e.preventDefault();
+    handleSubmit("admin"); // Use the /admin route
+  };
+
+  const handleUserSignup = (e) => {
+    e.preventDefault();
+    handleSubmit("user"); // Use the /user route
+  };
+
   return (
     <div className="container-fluid h-sm-auto signup-page d-flex align-items-center justify-content-center p-0">
       <ToastContainer position="top-right" />
@@ -86,7 +94,8 @@ const Signup = () => {
             <h2 className="text-center mb-3 form-title">
               Sign Up for EasyReserve™
             </h2>
-            <form onSubmit={handleSubmit}>
+            <form>
+              {/* Name Input */}
               <div className="mb-3">
                 <label htmlFor="name" className="form-label Label">
                   Your Name
@@ -107,6 +116,7 @@ const Signup = () => {
                 </div>
               </div>
 
+              {/* Email Input */}
               <div className="mb-3">
                 <label htmlFor="email" className="form-label Label">
                   Your Email
@@ -127,6 +137,7 @@ const Signup = () => {
                 </div>
               </div>
 
+              {/* Phone Input */}
               <div className="mb-3">
                 <label htmlFor="phone" className="form-label Label">
                   Your Phone Number
@@ -151,6 +162,7 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Password Input */}
               <div className="mb-3">
                 <label htmlFor="password" className="form-label Label">
                   Your Password
@@ -174,8 +186,12 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Confirm Password Input */}
               <div className="mb-3">
-                <label htmlFor="confirmPassword" className="form-label Label">
+                <label
+                  htmlFor="confirmPassword"
+                  className="form-label Label"
+                >
                   Confirm Password
                 </label>
                 <div className="input-group">
@@ -197,6 +213,7 @@ const Signup = () => {
                 )}
               </div>
 
+              {/* Terms Checkbox */}
               <div className="form-check mb-3">
                 <input
                   type="checkbox"
@@ -211,16 +228,25 @@ const Signup = () => {
                 </label>
               </div>
 
+              {/* Sign Up Buttons */}
               <div className="d-flex justify-content-between align-items-center">
-                <button type="submit" className="btn btn-primary w-50 mx-1">
+                <button
+                  onClick={handleAdminSignup}
+                  className="btn btn-primary w-50 mx-1"
+                >
                   Sign Up <br />
                   as admin
                 </button>
-                <button type="submit" className="btn btn-primary w-50 mx-1">
+                <button
+                  onClick={handleUserSignup}
+                  className="btn btn-primary w-50 mx-1"
+                >
                   Sign Up <br />
                   as user
                 </button>
               </div>
+
+              {/* General Error Display */}
               {error && !error.includes("Password") && (
                 <p className="text-danger mt-2">{error}</p>
               )}

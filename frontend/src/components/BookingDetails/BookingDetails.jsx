@@ -99,9 +99,16 @@ const BookingDetails = ({
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/appointments", {
-        ...appointmentData,
-      });
+      console.log(appointmentData,'hello from appoi data');
+      const response = await axios.post("http://localhost:3000/appointments", 
+      appointmentData, // This is the request body
+      {
+        headers: {
+          "token": localStorage.getItem("token"),
+        },
+      }
+    );
+    
       if (response.data.error) {
         setMessage(
           "There was an error creating your appointment. Please try again."

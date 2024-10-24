@@ -20,7 +20,8 @@ class ServiceController {
   }
 
   async deleteService(req, res) {
-    const { name } = req.body;
+    const name = req.headers["name"];
+    console.log("hello from delete service", name);
     try {
       const result = await this.serviceRepo.deleteService(name);
       if (result.deletedCount === 0) {
@@ -39,6 +40,7 @@ class ServiceController {
 
   async addService(req, res) {
     const { name, cost } = req.body;
+    console.log("hello from add service", name, cost);
     try {
       await this.serviceRepo.addService(name, cost);
       res.status(201).json({ message: "Service added successfully." });
@@ -52,6 +54,7 @@ class ServiceController {
 
   async updateServiceCost(req, res) {
     const { name, newCost } = req.body;
+    console.log("hello from update service", name, newCost);
     try {
       await this.serviceRepo.updateServiceCost(name, newCost);
       res.status(200).json({ message: "Service cost updated successfully." });
