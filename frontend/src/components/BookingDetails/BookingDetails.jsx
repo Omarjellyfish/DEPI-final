@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { SelectedServicesContext } from "../../context/SelectedServicesContext"; // Import the context
+import { SelectedServicesContext } from "../../context/SelectedServicesContext";
+import { toast } from "react-toastify";
 
 const BookingDetails = ({
   location,
@@ -78,6 +79,7 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
+    toast.success("Booking successful!");
     handleNavigationCash();
 
     if (isLoading) {
