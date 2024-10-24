@@ -87,6 +87,7 @@ function TokenRouteFunc(
     }
     if (result) {
       result["userType"] = req.typeUser;
+      console.log(result["userType"], "hello from result");
       res.send(result);
     }
   });
