@@ -9,7 +9,6 @@ const BookingsComponent = () => {
   const [year, setYear] = useState(2024);
 
   const fetchBookings = () => {
-    console.log(year, month, "Fetching bookings");
     axios
       .get(`http://localhost:3000/appointments/month/`, {
         headers: {
@@ -19,7 +18,6 @@ const BookingsComponent = () => {
         },
       })
       .then((response) => {
-        console.log(response.data.appointments, "Fetched appointments");
         setBookings(response.data.appointments);
       })
       .catch((error) => {
