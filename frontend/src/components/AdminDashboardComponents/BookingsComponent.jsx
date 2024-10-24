@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import Booking from "../../components/Booking/Booking";
 import { toast } from "react-toastify";
 
 const BookingsComponent = () => {
   const [bookings, setBookings] = useState([]);
-  const [filteredBookings, setFilteredBookings] = useState([]);
   const [month, setMonth] = useState(10);
   const [year, setYear] = useState(2024);
 
   const fetchBookings = () => {
-    console.log(year,month,'hello from fetch bookings');
-    axios.get(`http://localhost:3000/appointments/month/`, {
-      headers: {
-        "token": localStorage.getItem("token"),
-        "year": year,
-        "month": month,
-      },
-    })    
+    console.log(year, month, "Fetching bookings");
+    axios
+      .get(`http://localhost:3000/appointments/month/`, {
+        headers: {
+          token: localStorage.getItem("token"),
+          year: year,
+          month: month,
+        },
+      })
       .then((response) => {
-        console.log(response.data.appointments, "hello from appointments");
+        console.log(response.data.appointments, "Fetched appointments");
         setBookings(response.data.appointments);
       })
       .catch((error) => {
@@ -27,25 +27,17 @@ const BookingsComponent = () => {
       });
   };
 
-  const fetchFilteredBookings = () => {
-    const filtered = bookings.filter((booking) => {
-      const bookingDate = new Date(booking.bookingDate);
-      const bookingMonth = bookingDate.getMonth() + 1;
-      const bookingYear = bookingDate.getFullYear();
-      return bookingMonth === parseInt(month) && bookingYear === parseInt(year);
-    });
-    setFilteredBookings(filtered);
-  };
-
   const handleCancelBooking = (bookingId) => {
-    console.log("hello from booking id",bookingId);
+    console.log("Canceling booking", bookingId);
     axios
-      .delete(`http://localhost:3000/appointments/cancel`,{headers:{"token":localStorage.getItem("token"), "appointmentId":bookingId}})
+      .delete(`http://localhost:3000/appointments/cancel`, {
+        headers: {
+          token: localStorage.getItem("token"),
+          appointmentId: bookingId,
+        },
+      })
       .then(() => {
         setBookings(bookings.filter((booking) => booking.id !== bookingId));
-        setFilteredBookings(
-          filteredBookings.filter((booking) => booking.id !== bookingId)
-        );
         toast.success("Booking canceled successfully!");
       })
       .catch((error) => {
@@ -59,7 +51,7 @@ const BookingsComponent = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          fetchFilteredBookings();
+          fetchBookings();
         }}
       >
         <div className="mb-3">
@@ -84,7 +76,7 @@ const BookingsComponent = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary" onClick={fetchBookings}>
+        <button type="submit" className="btn btn-primary">
           Fetch Bookings
         </button>
       </form>
@@ -93,7 +85,6 @@ const BookingsComponent = () => {
         {bookings.length > 0 ? (
           bookings.map((booking) => (
             <div className="col-md-3 mb-3 d-flex flex-column" key={booking._id}>
-              {console.log(booking._id)}
               <Booking
                 bookerName={booking.months.days.times.appointment.user}
                 service={booking.months.days.times.appointment.service}
