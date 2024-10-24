@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { SelectedServicesContext } from "../../context/SelectedServicesContext"; // Adjust the import path
+import { SelectedServicesContext } from "../../context/SelectedServicesContext"; 
 import TimeSelection from "../../components/TimeSelection/TimeSelection";
 import BookingDetails from "../../components/BookingDetails/BookingDetails";
 import "./Time.css";
@@ -9,13 +9,13 @@ const Time = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [message, setMessage] = useState("");
   const {
-    year,              // renamed from selectedYear
+    year,              
     setSelectedYear,    
-    month,             // renamed from selectedMonth
+    month,            
     setSelectedMonth,   
-    day,               // renamed from selectedDay
+    day,              
     setSelectedDay,     
-    timeSlot,          // renamed from selectedTimeSlot
+    timeSlot,          
     setSelectedTimeSlot 
   } = useContext(SelectedServicesContext);
   useEffect(() => {
@@ -26,12 +26,12 @@ const Time = () => {
     setSelectedMonth(month);
     setSelectedDay(day);
     console.log(year,month,day,timeSlot,'sdfs')
-    // Optionally, you can also set the time slot if selectedTime is updated
+    
     if (selectedTime) {
       setSelectedTimeSlot(selectedTime);
     }
 
-    // Optional: You can set a message based on the selected date or time
+  
     setMessage(`Selected Date: ${year}-${month}-${day}, Time: ${selectedTime}`);
   }, [selectedTime,selectedDate]);
   return (
