@@ -56,7 +56,7 @@ const Login = () => {
       console.log("helo user type",usertype); //user or admin
       console.log(response.data);
 
-
+      localStorage.setItem("userType",usertype)
       localStorage.setItem("token", token);
       localStorage.setItem("refresh", refresh);
 
