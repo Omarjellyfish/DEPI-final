@@ -25,10 +25,10 @@ const Time = () => {
     // Update the context
     setSelectedMonth(month);
     setSelectedDay(day);
-    console.log(year,month,day,timeSlot)
+    console.log(year,month,day,timeSlot,'sdfs')
     // Optionally, you can also set the time slot if selectedTime is updated
     if (selectedTime) {
-      setSelectedTimeSlot(timeSlot);
+      setSelectedTimeSlot(selectedTime);
     }
 
     // Optional: You can set a message based on the selected date or time

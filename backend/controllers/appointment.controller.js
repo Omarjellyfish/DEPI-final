@@ -64,9 +64,9 @@ export async function getAllAppointmentsMonth(req, res) {
 
 export async function createAppointment(req, res) {
   // console.log(req.userEmail[0], "hello from user email 1111111");
-  let userId = req.userId;
+  let userId = req.userId.toString();
   console.log(userId);
-  let user = "6719eb9315a01e1d8c2329dc";
+  let user = userId;
 
   const { year, month, day, timeSlot, service, cost, note } = req.body;
   // sendConfirmationEmail(

@@ -27,13 +27,13 @@ import UserRouterFun from "./routes/user_routes/user_routes.js";
 import WorkDaysFunc from "./routes/workdays_routes/workdays.routes.js";
 dotenv.config();
 // uncomment when production
-// console.log =
-//   console.error =
-//   console.warn =
-//   console.debug =
-//   console.info =
-//   console.warn =
-//     () => {};
+console.log =
+  console.error =
+  console.warn =
+  console.debug =
+  console.info =
+  console.warn =
+    () => {};
 mongoose
   .connect(process.env.CONNECTION_STRING, {})
   .then(() => {

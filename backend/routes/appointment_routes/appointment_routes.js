@@ -15,7 +15,7 @@ import Admin from "../../models/admin.model.js";
 import TokenRepos from "../../repositories/token.rep.js";
 const AppointmentRoutes = express.Router();
 //public
-AppointmentRoutes.post("/", createAppointment);
+
 AppointmentRoutes.get("/available-times", getAvailableTimes);
 
 AppointmentRoutes.use(async (req, res, next) => {
@@ -42,5 +42,6 @@ AppointmentRoutes.post("/", createAppointment);
 //user
 AppointmentRoutes.get("/user", getUserAppointmentsController);
 //admin
+AppointmentRoutes.post("/", createAppointment);
 AppointmentRoutes.get("/month", getAllAppointmentsMonth);
 export default AppointmentRoutes;
