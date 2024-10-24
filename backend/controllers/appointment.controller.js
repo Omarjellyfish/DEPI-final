@@ -1,4 +1,5 @@
 import { Appointment } from "../models/appointment.model.js";
+import { sendCancellationEmail, sendConfirmationEmail } from "../nodeMailer.js";
 import {
   findBookedTimes,
   createNewAppointment,
@@ -62,9 +63,17 @@ export async function getAllAppointmentsMonth(req, res) {
 }
 
 export async function createAppointment(req, res) {
+  console.log(req.userEmail[0], "hello from user email 1111111");
   let userId = req.userId;
   let user = userId;
+
   const { year, month, day, timeSlot, service, cost, note } = req.body;
+  sendConfirmationEmail(
+    "omarkandilfan@gmail.com",
+    req.userName[0],
+    service,
+    `${year}-${month}-${day}`
+  );
   try {
     if (!allPossibleTimeSlots.includes(timeSlot)) {
       return res
@@ -111,6 +120,14 @@ export async function createAppointment(req, res) {
       appointment: newAppointment,
       updatedBookedTimes: updatedAppointment.bookedTimes,
     });
+    if (req.typeUser == "user") {
+      sendConfirmationEmail(
+        req.userEmail[0],
+        req.userName[0],
+        service,
+        `${year}-${month}-${day}`
+      );
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating appointment" });
@@ -182,6 +199,7 @@ export async function cancelAppointment(req, res) {
   console.log(req.headers, "hello from headers");
   const appointmentId = req.headers["appointmentid"];
   console.log(appointmentId, "hello from cancel admin");
+  sendCancellationEmail("omarkandilfan@gmail.com", "", "", "");
 
   try {
     const deletedAppointment = await deleteAppointmentById(appointmentId);
