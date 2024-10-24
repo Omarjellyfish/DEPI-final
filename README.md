@@ -1,6 +1,6 @@
-# Doctor Appointment Booking System
+# Appointment Booking System
 
-**EasyReserve** is a web-based **Doctor Appointment Booking System** developed as part of the Digital Egypt Pioneers Initiative (DEPI) graduation project. It allows patients to conveniently schedule and manage their appointments with doctors from various clinics, while also enabling doctors and clinics to showcase their services and availability, while offering an admin dashboard for managing bookings and viewing statistics. It is designed to support secure, scalable, and responsive features for a seamless user experience.
+**EasyReserve** is a web-based Booking System developed as part of the Digital Egypt Pioneers Initiative (DEPI) graduation project. It allows users to conveniently schedule and manage their appointments , while also enabling admins to showcase their services and availability, while offering an admin dashboard for managing bookings and viewing statistics. It is designed to support secure, scalable, and responsive features for a seamless user experience. 
 
 ## Features
 - **User-Friendly Interface**:Patients can browse through available services, and create appointments 
