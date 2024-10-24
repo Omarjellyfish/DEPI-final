@@ -1,8 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import BookingDetails from "../../components/BookingDetails/BookingDetails";
 import "./Review.css";
-
+import { useState } from "react";
 function Review() {
+  // const [note,setNote]=useState("")
   return (
     <div className="review">
       <div className="container mt-3 ">

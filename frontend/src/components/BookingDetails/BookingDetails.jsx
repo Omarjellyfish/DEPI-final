@@ -22,11 +22,12 @@ const BookingDetails = ({
   month,
   day,
   timeSlot,
+  note
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  //usecontext year,month,day,timeSlot
   // Fetch selected services and total price from context
   const { selectedServices } = useContext(SelectedServicesContext);
   const service =
@@ -95,7 +96,7 @@ const BookingDetails = ({
       timeSlot: timeSlot,
       service: service,
       cost: price,
-      note: "",
+      note: note,
     };
 
     try {

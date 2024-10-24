@@ -19,12 +19,14 @@ export default async function CustomePasetoMiddleWare(
   ).getPasetoUser(req.headers["token"]);
   if (result) {
     console.log(req.headers["token"], "this is token");
-    req.typeUser = result.type;
+    console.log(result, "hello from full result");
+    console.log(result.tokenModel.type, "hello from type");
+    req.typeUser = result.tokenModel.type;
     req.nameUser = result.name;
     req.userId = result.tokenModel._id;
     req.userEmail = result.tokenModel.email;
     req.userName = result.tokenModel.name;
-    console.log(req.userEmail[0], "hello from token model");
+    console.log(req.typeUser[0], "hello from token model");
     next();
     return;
   }

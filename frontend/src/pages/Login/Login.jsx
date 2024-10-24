@@ -50,9 +50,12 @@ const Login = () => {
           },
         }
       );
-      const token = response.data.token;
-      const refresh = response.data.refresh;
-      console.log(token, refresh);
+      const token = response.data.token.token;
+      const refresh = response.data.token.refresh;
+      const usertype=response.data.Type.type
+      console.log("helo user type",usertype); //user or admin
+      console.log(response.data);
+
 
       localStorage.setItem("token", token);
       localStorage.setItem("refresh", refresh);

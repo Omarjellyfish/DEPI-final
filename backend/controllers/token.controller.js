@@ -10,9 +10,16 @@ export default class TokenController {
   }
   async createTokenByEmail(email) {
     console.log("9999999");
+    let usertype;
     let res1 = await this.userModel.findOne({ email: email });
+    if (res1) {
+      usertype = "user";
+    }
     if (!res1) {
       res1 = await this.adminModel.findOne({ email: email });
+      if (res1) {
+        usertype = "admin";
+      }
     }
     console.log("hyyyyy");
     if (!res1) {
@@ -28,7 +35,10 @@ export default class TokenController {
       this.adminModel,
       this.next
     ).addToken(res1._id);
-    return token;
+
+    let Type = { type: usertype };
+    console.log(Type, token, "hellom from res 1 and token");
+    return { token, Type };
   }
   async createTokenByRefresh(token) {
     let user = await new this.tokenRepos(
@@ -56,8 +66,13 @@ export default class TokenController {
     ).getPasetoUser(token);
     return user;
   }
-  async deleteUserToken(userID){
-    let user=await new this.tokenRepos(this.userModel,this.tokenModel,this.adminModel,this.next).deleteUserToken(userID);
+  async deleteUserToken(userID) {
+    let user = await new this.tokenRepos(
+      this.userModel,
+      this.tokenModel,
+      this.adminModel,
+      this.next
+    ).deleteUserToken(userID);
     return {};
   }
 }
