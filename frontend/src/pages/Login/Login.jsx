@@ -62,6 +62,7 @@ const Login = () => {
 
       toast.success("Login successful!");
       console.log("Login successful:", response.data);
+      localStorage.setItem("loggedIn", true)
 
       if (isAdmin) {
         navigate("/adminDashboard");
