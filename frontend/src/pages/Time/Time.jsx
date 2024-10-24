@@ -7,7 +7,10 @@ const Time = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [message, setMessage] = useState("");
-
+  // yy-mm-dd selectedDate split by (-) =>
+  // 10:00 AM => selectedTime
+  // year,month,day, timeSlot <= in context
+  // const { selectedServices, setSelectedServices } = useContext(SelectedServicesContext);
   return (
     <div className="time">
       <div className="container mt-4">

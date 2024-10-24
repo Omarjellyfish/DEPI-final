@@ -53,7 +53,7 @@ const Login = () => {
       const token = response.data.token.token;
       const refresh = response.data.token.refresh;
       const usertype=response.data.Type.type
-      console.log("helo user type",usertype);
+      console.log("helo user type",usertype); //user or admin
       console.log(response.data);
 
 
