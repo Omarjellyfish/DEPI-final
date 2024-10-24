@@ -2,30 +2,24 @@ import ErrorCustome from "../utilities/error.js";
 const routes_admin = {
   "/services": ["*"],
   "/admin": ["*"],
-  "/appointments": ["post"],
   "/appointments/day": ["get"],
   "/appointments/month/": ["get"],
   "/services/delete-service": ["delete"],
-  "/services": ["post"],
   "/services/update-service": ["put"],
   "/workdays": ["*"],
   "/appointments": ["post"],
   "/review": ["get"],
-  "/appointments/cancel": ["delete"],
-  "/review": ["get"],
-  "/services": ["get"],
   "/appointments/available-times/": ["get"],
   "/appointments/cancel": ["delete"],
+  "/appointments/user": ["get"],
 };
 const route_user = {
   "/appointments/user": ["get"],
   "/review": ["post"],
-  "/appointments": ["post"],
   "/user": ["*"],
   "/appointments": ["post"],
   "/review": ["get"],
   "/appointments/cancel": ["delete"],
-  "/review": ["get"],
   "/services": ["get"],
   "/appointments/available-times/": ["get"],
 };
@@ -55,6 +49,12 @@ export default function CheckPermission(req, res, next) {
         route_user[req.originalUrl].indexOf(req.method.toLowerCase()) == -1)
     ) {
       console.log("hello from inside if", req.originalUrl);
+      console.log(req.typeUser);
+      console.log(
+        "hello from if statement block",
+
+        routes_admin[req.originalUrl]
+      );
       let err = {};
       err.res = new ErrorCustome(
         "you do noth have permission",

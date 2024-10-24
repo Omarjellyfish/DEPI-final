@@ -7,14 +7,16 @@ import { toast } from "react-toastify";
 
 const UserDashboard = () => {
   const [bookings, setBookings] = useState([]);
-  const fetchBookings = () => {
-    axios
-      .get("http://localhost:3000/user/bookings", {
-        headers: {
-          token: localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/appointments/user", {
+          headers: {
+            "token": localStorage.getItem("token"),
+          },
+        });
+        console.log(response, 'hello from response in user dashboard');
+
         const userBookings = [];
         response.data.bookings.forEach((booking) => {
           booking.months.forEach((month) => {
@@ -27,11 +29,14 @@ const UserDashboard = () => {
         });
 
         setBookings(userBookings);
-      })
-      .catch((error) => {
+      } catch (error) {
+        console.log("asdjfkasdhjklfhasdkjlf im here");
         console.error("Error fetching user bookings:", error);
-      });
-  };
+      }
+    };
+
+    fetchBookings();
+  }, []);
 
   const handleCancelBooking = (bookingId) => {
     axios
@@ -50,11 +55,6 @@ const UserDashboard = () => {
         toast.error("Failed to cancel booking!");
       });
   };
-
-  useEffect(() => {
-    fetchBookings();
-  }, []);
-
   return (
     <div className="container mt-4">
       <div className="d-flex flex-column align-items-center">

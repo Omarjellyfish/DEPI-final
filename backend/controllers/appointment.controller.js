@@ -63,17 +63,18 @@ export async function getAllAppointmentsMonth(req, res) {
 }
 
 export async function createAppointment(req, res) {
-  console.log(req.userEmail[0], "hello from user email 1111111");
+  // console.log(req.userEmail[0], "hello from user email 1111111");
   let userId = req.userId;
-  let user = userId;
+  console.log(userId);
+  let user = "6719eb9315a01e1d8c2329dc";
 
   const { year, month, day, timeSlot, service, cost, note } = req.body;
-  sendConfirmationEmail(
-    "omarkandilfan@gmail.com",
-    req.userName[0],
-    service,
-    `${year}-${month}-${day}`
-  );
+  // sendConfirmationEmail(
+  //   "omarkandilfan@gmail.com",
+  //   req.userName[0],
+  //   service,
+  //   `${year}-${month}-${day}`
+  // );
   try {
     if (!allPossibleTimeSlots.includes(timeSlot)) {
       return res
@@ -192,7 +193,9 @@ export async function getUserAppointmentsController(req, res) {
     res.status(200).json({ appointments });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Error fetching user appointments" });
+    res
+      .status(404)
+      .json({ message: "Error fetching user appointments", bookings: [] });
   }
 }
 export async function cancelAppointment(req, res) {
