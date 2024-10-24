@@ -53,6 +53,7 @@ function Review() {
               showButtonBook={false}
               showButtonPayPal={true}
               showButtonCash={true}
+              showDateTime={true}
             />
           </div>
         </div>

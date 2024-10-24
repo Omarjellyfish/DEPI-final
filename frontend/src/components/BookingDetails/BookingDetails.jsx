@@ -18,31 +18,30 @@ const BookingDetails = ({
   showButtonPayPal,
   showButtonCash,
   showButtonBook,
-  year,
-  month,
-  day,
-  timeSlot,
   note
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  //usecontext year,month,day,timeSlot
+  
   // Fetch selected services and total price from context
-  const { selectedServices } = useContext(SelectedServicesContext);
-  const service =
-    selectedServices.map((s) => s.name).join(", ") || "No Service";
+  const { selectedServices, year, month, day, timeSlot } = useContext(SelectedServicesContext);
+  const service = selectedServices.map((s) => s.name).join(", ") || "No Service";
   const price = selectedServices.reduce((total, s) => total + s.cost, 0) || 0;
+
 
   const handleNavigationreview = () => {
     navigate("/review");
   };
+  
   const handleNavigationtime = () => {
     navigate("/time");
   };
+  
   const handleNavigationCash = () => {
     navigate("/success");
   };
+
   const handlePayPalCheckout = async () => {
     if (isLoading) return;
 
@@ -72,9 +71,7 @@ const BookingDetails = ({
       window.location.href = response.data.approvalUrl;
     } catch (error) {
       console.error("Error creating PayPal order:", error);
-      setMessage(
-        "There was an error creating your PayPal order. Please try again."
-      );
+      setMessage("There was an error creating your PayPal order. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -100,28 +97,23 @@ const BookingDetails = ({
     };
 
     try {
-      console.log(appointmentData,'hello from appoi data');
+      console.log(appointmentData, 'hello from appointment data');
       const response = await axios.post("http://localhost:3000/appointments", 
       appointmentData, // This is the request body
       {
         headers: {
           "token": localStorage.getItem("token"),
         },
-      }
-    );
+      });
     
       if (response.data.error) {
-        setMessage(
-          "There was an error creating your appointment. Please try again."
-        );
+        setMessage("There was an error creating your appointment. Please try again.");
       } else {
         setMessage("Appointment created successfully!");
       }
     } catch (error) {
       console.error("Error creating appointment:", error);
-      setMessage(
-        "There was an error creating your appointment. Please try again."
-      );
+      setMessage("There was an error creating your appointment. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -142,7 +134,7 @@ const BookingDetails = ({
           <hr />
           {showDateTime && (
             <div className="mb-3">
-              <strong>{dateTime}</strong>
+              <strong>{`${year}-${month}-${day}  ${timeSlot}`}</strong>
               <p className="text-muted">{duration}</p>
               <hr />
             </div>
@@ -180,9 +172,7 @@ const BookingDetails = ({
       )}
       {showButtonPayPal && (
         <button
-          className={`btn ${
-            isLoading ? "btn-secondary" : "btn-primary"
-          } w-100 mt-3`}
+          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
           onClick={handlePayPalCheckout}
           disabled={nextButtonDisabled || isLoading}
         >
@@ -191,9 +181,7 @@ const BookingDetails = ({
       )}
       {showButtonCash && (
         <button
-          className={`btn ${
-            isLoading ? "btn-secondary" : "btn-primary"
-          } w-100 mt-3`}
+          className={`btn ${isLoading ? "btn-secondary" : "btn-primary"} w-100 mt-3`}
           onClick={handleCashCheckout}
           disabled={nextButtonDisabled || isLoading}
         >
