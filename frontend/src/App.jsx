@@ -13,25 +13,28 @@ import Testimonials from "./pages/Testimonials/Testimonials";
 import BookingDetails from "./components/BookingDetails/BookingDetails";
 import { SelectedServicesProvider } from "./context/SelectedServicesContext";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
-
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Navbar />
-      <SelectedServicesProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/time" element={<Time />} />
-          <Route path="/review" element={<Review />} />
-          <Route path="/adminDashboard" element={<AdminDashboard />} />
-          <Route path="/services" element={<Services />} />
-          <Route path="/success" element={<Success />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/testimonials" element={<UserDashboard />} />
-        </Routes>
-      </SelectedServicesProvider>
-    </BrowserRouter>
+    <>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <Navbar />
+        <SelectedServicesProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/time" element={<Time />} />
+            <Route path="/review" element={<Review />} />
+            <Route path="/adminDashboard" element={<AdminDashboard />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/success" element={<Success />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/testimonials" element={<UserDashboard />} />
+          </Routes>
+        </SelectedServicesProvider>
+      </BrowserRouter>
+      <ToastContainer />
+    </>
   );
 }
 
