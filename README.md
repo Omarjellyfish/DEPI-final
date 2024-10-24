@@ -10,18 +10,16 @@
 - **Admin Features**: Clinics can manage their doctor's schedules, services, and availability directly within the system.
 - **Booking Review**: Users can view and cancel their bookings.
 - **Statistics Dashboard**: The system provides a dashboard to view booking statistics such as the number of bookings, types of services, etc.
-- **Scalability**: The system should handle at least 1000 concurrent users efficiently.
-- **Responsive Design**: The interface should be fully responsive, supporting both mobile and desktop views.
+  - **Responsive Design**: The interface should be fully responsive, supporting both mobile and desktop views.
 - **Database Management**: MongoDB will be used to store data for bookings and users.
 - **Security**: Implement CSRF protection to ensure secure data requests.
 - **Payment Integration**: Integration with third-party payment systems like Stripe or PayPal for processing transactions.
-- **API Logging**: Detailed logging should be implemented for API requests to assist in debugging and monitoring.
 
 ## Technologies Used
 - **Frontend**: [React.js](https://reactjs.org/) for the user interface.
 - **Backend**: Node.js with Express.js to manage the server and APIs.
 - **Database**: MongoDB for storing user data, appointments, and doctor information.
-- **Authentication**: JWT (JSON Web Tokens) for secure login sessions.
-- **Email Notifications**: Used for sending notifications and reminders to patients.
-- **Payment Integration**: Stripe or PayPal for handling payments.
+- **Authentication**:Tokens for secure login sessions.
+- **Email Notifications**: Confirming appointments or notification of cancellation
+- **Payment Integration**: PayPal for handling payments.
 - **Security**: CSRF protection and secure data handling.
