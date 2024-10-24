@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { SelectedServicesContext } from "../../context/SelectedServicesContext"; // Import the context
+import { SelectedServicesContext } from "../../context/SelectedServicesContext";
+import { toast } from "react-toastify";
 
 const BookingDetails = ({
   location,
@@ -22,7 +23,7 @@ const BookingDetails = ({
   month,
   day,
   timeSlot,
-  note
+  note,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -81,6 +82,7 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
+    toast.success("Booking successful!");
     handleNavigationCash();
 
     if (isLoading) {
@@ -100,16 +102,17 @@ const BookingDetails = ({
     };
 
     try {
-      console.log(appointmentData,'hello from appoi data');
-      const response = await axios.post("http://localhost:3000/appointments", 
-      appointmentData, // This is the request body
-      {
-        headers: {
-          "token": localStorage.getItem("token"),
-        },
-      }
-    );
-    
+      console.log(appointmentData, "hello from appoi data");
+      const response = await axios.post(
+        "http://localhost:3000/appointments",
+        appointmentData, // This is the request body
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+
       if (response.data.error) {
         setMessage(
           "There was an error creating your appointment. Please try again."
