@@ -18,7 +18,7 @@ const routes_admin = {
   "/appointments/cancel": ["delete"],
 };
 const route_user = {
-  "/appointments/user/": ["get"],
+  "/appointments/user": ["get"],
   "/review": ["post"],
   "/appointments": ["post"],
   "/user": ["*"],
