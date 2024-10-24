@@ -2,8 +2,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import BookingDetails from "../../components/BookingDetails/BookingDetails";
 import "./Review.css";
 import { useState } from "react";
+
 function Review() {
-  // const [note,setNote]=useState("")
+  const [note, setNote] = useState("");
+
+  const handleNoteChange = (event) => {
+    setNote(event.target.value);
+  };
+
   return (
     <div className="review">
       <div className="container mt-3 ">
@@ -30,6 +36,8 @@ function Review() {
                   id="bookingNotes"
                   rows="6"
                   placeholder=" comments "
+                  value={note}
+                  onChange={handleNoteChange}
                 ></textarea>
               </div>
             </div>
