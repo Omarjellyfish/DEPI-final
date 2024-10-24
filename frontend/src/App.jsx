@@ -12,6 +12,7 @@ import Signup from "./pages/Signup/Signup";
 import Testimonials from "./pages/Testimonials/Testimonials";
 import BookingDetails from "./components/BookingDetails/BookingDetails";
 import { SelectedServicesProvider } from "./context/SelectedServicesContext";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/testimonials" element={<UserDashboard />} />
         </Routes>
       </SelectedServicesProvider>
     </BrowserRouter>
