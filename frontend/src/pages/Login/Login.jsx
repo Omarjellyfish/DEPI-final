@@ -61,7 +61,7 @@ const Login = () => {
       console.log("Login successful:", response.data);
 
       if (isAdmin) {
-        navigate("/dashboard");
+        navigate("/adminDashboard");
       } else {
         navigate("/services");
       }
