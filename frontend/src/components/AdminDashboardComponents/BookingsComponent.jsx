@@ -26,7 +26,6 @@ const BookingsComponent = () => {
   };
 
   const handleCancelBooking = (bookingId) => {
-    console.log("Canceling booking", bookingId);
     axios
       .delete(`http://localhost:3000/appointments/cancel`, {
         headers: {
