@@ -14,6 +14,8 @@ function Navbar() {
     setIsCollapsed(!isCollapsed);
   };
 
+  const userTypeVar = localStorage.getItem("userType");
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light text-md-center sticky-top">
       <div className="container">
@@ -62,11 +64,21 @@ function Navbar() {
                 Sign Up
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/adminDashboard">
-                Admin Dashboard
-              </Link>
-            </li>
+
+            {userTypeVar == "admin" ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/adminDashboard">
+                  Admin Dashboard
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/userDashboard">
+                  User Dashboard
+                </Link>
+              </li>
+            )}
+
             <li className="nav-item">
               <Link className="nav-link" to="/services">
                 Services

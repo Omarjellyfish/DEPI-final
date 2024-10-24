@@ -29,7 +29,8 @@ function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/testimonials" element={<UserDashboard />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/userDashboard" element={<UserDashboard />} />
           </Routes>
         </SelectedServicesProvider>
       </BrowserRouter>
