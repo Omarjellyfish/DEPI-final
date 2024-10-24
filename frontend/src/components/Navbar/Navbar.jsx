@@ -39,32 +39,13 @@ function Navbar() {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav ms-lg-auto ps-3 mb-2 mb-lg-0 gap-md-3 gap-lg-4">
-            <li className="nav-item">
-              <Link className="nav-link" to="/time">
-                For Businesses
-              </Link>
-            </li>
+            
             <li className="nav-item">
               <Link className="nav-link" to="/login">
                 Login
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/testimonials">
-                Testimonials
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/review">
-                Review
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/signup">
-                Sign Up
-              </Link>
-            </li>
-
+           
             {userTypeVar == "admin" ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/adminDashboard">
@@ -78,17 +59,12 @@ function Navbar() {
                 </Link>
               </li>
             )}
+             <li className="nav-item">
+              <Link className="nav-link" to="/testimonials">
+                Testimonials
+              </Link>
+            </li>
 
-            <li className="nav-item">
-              <Link className="nav-link" to="/services">
-                Services
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/success">
-                Success
-              </Link>
-            </li>
           </ul>
         </div>
       </div>
