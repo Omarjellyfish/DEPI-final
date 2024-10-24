@@ -33,10 +33,15 @@ const BookingDetails = ({
     selectedServices.map((s) => s.name).join(", ") || "No Service";
   const price = selectedServices.reduce((total, s) => total + s.cost, 0) || 0;
 
-  const handleNavigation = () => {
+  const handleNavigationreview = () => {
     navigate("/review");
   };
-
+  const handleNavigationtime = () => {
+    navigate("/time");
+  };
+  const handleNavigationCash = () => {
+    navigate("/success");
+  };
   const handlePayPalCheckout = async () => {
     if (isLoading) return;
 
@@ -75,6 +80,8 @@ const BookingDetails = ({
   };
 
   const handleCashCheckout = async () => {
+    handleNavigationCash();
+
     if (isLoading) {
       return;
     }
@@ -146,7 +153,7 @@ const BookingDetails = ({
       {showButtonNext && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={handleNavigation}
+          onClick={handleNavigationtime}
           disabled={nextButtonDisabled}
         >
           Next
@@ -156,7 +163,7 @@ const BookingDetails = ({
       {showButtonBook && (
         <button
           className="btn btn-primary w-100 mt-3"
-          onClick={onNextClick}
+          onClick={handleNavigationreview}
           disabled={nextButtonDisabled}
         >
           Book Now

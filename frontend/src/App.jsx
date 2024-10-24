@@ -20,7 +20,7 @@ function App() {
       <SelectedServicesProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/businesses" element={<Time />} />
+          <Route path="/time" element={<Time />} />
           <Route path="/review" element={<Review />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
           <Route path="/services" element={<Services />} />
