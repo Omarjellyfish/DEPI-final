@@ -113,7 +113,9 @@ export async function getUserAppointments(userId) {
 
 export async function deleteAppointmentById(appointmentId) {
   try {
+    const resulthere = await Booking.deleteOne({ _id: appointmentId });
     await Booking.deleteOne({ appointmentId });
+    console.log(resulthere, "hello from result here");
     return await Appointment.findByIdAndDelete(appointmentId);
   } catch (error) {
     throw new Error("Error deleting appointment: " + error.message);
