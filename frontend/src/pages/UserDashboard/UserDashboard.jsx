@@ -15,18 +15,22 @@ const UserDashboard = () => {
             "token": localStorage.getItem("token"),
           },
         });
-        console.log(response, 'hello from response in user dashboard');
+        console.log(response.data.appointments, 'hello from response in user dashboard');
 
-        const userBookings = [];
-        response.data.bookings.forEach((booking) => {
-          booking.months.forEach((month) => {
-            month.days.forEach((day) => {
-              day.times.forEach((time) => {
-                userBookings.push(time.appointment);
-              });
-            });
+        let userBookings = [];
+        response.data.appointments.forEach((booking) => {
+          // Push the entire booking object to the userBookings array
+          userBookings.push({
+            appointmentId: booking.appointmentId,
+            cost: booking.cost,
+            date: booking.date,
+            note: booking.note,
+            service: booking.service,
+            user: booking.user,
+            _id: booking._id,
           });
         });
+        console.log(userBookings,"hello from user bookings");
 
         setBookings(userBookings);
       } catch (error) {
