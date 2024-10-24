@@ -4,7 +4,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
 
@@ -13,9 +13,8 @@ function Navbar() {
   const handleToggle = () => {
     setIsCollapsed(!isCollapsed);
   };
-
   const userTypeVar = localStorage.getItem("userType");
-
+  const loggedIn = localStorage.getItem("loggedIn");
   return (
     <nav className="navbar navbar-expand-lg navbar-light text-md-center sticky-top">
       <div className="container">
@@ -39,13 +38,19 @@ function Navbar() {
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav ms-lg-auto ps-3 mb-2 mb-lg-0 gap-md-3 gap-lg-4">
-            
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-           
+            {loggedIn ? (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  logout
+                </Link>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </li>
+            )}
             {userTypeVar == "admin" ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/adminDashboard">
@@ -59,12 +64,11 @@ function Navbar() {
                 </Link>
               </li>
             )}
-             <li className="nav-item">
+            <li className="nav-item">
               <Link className="nav-link" to="/testimonials">
                 Testimonials
               </Link>
             </li>
-
           </ul>
         </div>
       </div>
