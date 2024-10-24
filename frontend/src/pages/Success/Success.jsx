@@ -11,7 +11,7 @@ function Success() {
     const fetchData = () => {
       const upcoming = [
         {
-          location: "Vurve - Bangalore",
+          location: "EasyReserve",
           service: "Haircut - Premier Stylist",
           price: 900,
           dateTime: "Sun 16 July 2023 at 5:00pm",
@@ -21,7 +21,7 @@ function Success() {
 
       const past = [
         {
-          location: "Vurve - Bangalore",
+          location: "EasyReserve",
           service: "Haircut - Premier Stylist",
           price: 900,
           dateTime: "Sun 16 July 2023 at 5:00pm",
@@ -30,7 +30,7 @@ function Success() {
       ];
 
       const confirmed = {
-        location: "Vurve - Bangalore",
+        location: "EasyReserve",
         service: "Haircut - Premier Stylist",
         price: 900,
         dateTime: "Sun 16 July 2023 at 5:00pm",

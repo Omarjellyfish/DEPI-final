@@ -23,3 +23,19 @@
 - **Email Notifications**: Confirming appointments or notification of cancellation
 - **Payment Integration**: PayPal for handling payments.
 - **Security**: CSRF protection and secure data handling.
+
+
+## To Run The App
+- **npm start** for running the backend
+- **npm run dev** for running the frontend
+- You would also require a couple of things for running the database, such as a .env file and database connection to MongoDB
+  -port=3000
+  -CONNECTION_STRING=
+  -TRAIL_MAIL= 
+  -TRAIL_PASSWORD= 
+  
+  -PAYPAL_CLIENT_ID=
+  -PAYPAL_SECRET=
+  -PAYPAL_BASE_URL=https://api-m.sandbox.paypal.com
+  -BASE_URL=http://localhost:3000
+  -FRONT_BASE_URL=http://localhost:4000
