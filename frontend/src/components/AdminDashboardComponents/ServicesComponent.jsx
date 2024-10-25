@@ -9,39 +9,43 @@ const ServicesComponent = () => {
   const [editServiceName, setEditServiceName] = useState(null);
 
   useEffect(() => {
+    fetchServices();
+  }, []);
+
+  const fetchServices = () => {
     axios
-      .get("http://localhost:3000/services",{headers:{"token":localStorage.getItem("token")}})
+      .get("http://localhost:3000/services", {
+        headers: { token: localStorage.getItem("token") },
+      })
       .then((response) => {
         setServices(response.data);
       })
       .catch((error) => {
         console.error("Error fetching services:", error);
       });
-  }, []);
+  };
 
   const handleServiceSubmit = (e) => {
     e.preventDefault();
-    const updateService = {
-      name: serviceName,
-      newCost: servicePrice,
-    };
-    const newService={
+    const newService = {
       name: serviceName,
       cost: servicePrice,
-    }
+    };
+
     if (editServiceName) {
+      const updateService = {
+        name: editServiceName,
+        newCost: servicePrice,
+      };
+
       axios
-        .put(`http://localhost:3000/services/update-service`, updateService,{headers:{"token":localStorage.getItem("token")}})
-        .then((response) => {
-          setServices(
-            services.map((service) =>
-              service.name === editServiceName ? response.data : service
-            )
-          );
+        .put(`http://localhost:3000/services/update-service`, updateService, {
+          headers: { token: localStorage.getItem("token") },
+        })
+        .then(() => {
           toast.success("Service updated successfully!");
-          setServiceName("");
-          setServicePrice("");
-          setEditServiceName(null);
+          resetForm();
+          fetchServices();
         })
         .catch((error) => {
           console.error("Error updating service:", error);
@@ -49,12 +53,13 @@ const ServicesComponent = () => {
         });
     } else {
       axios
-        .post("http://localhost:3000/services", newService,{headers:{"token":localStorage.getItem("token")}})
-        .then((response) => {
-          setServices([...services, response.data]);
+        .post("http://localhost:3000/services", newService, {
+          headers: { token: localStorage.getItem("token") },
+        })
+        .then(() => {
           toast.success("Service added successfully!");
-          setServiceName("");
-          setServicePrice("");
+          resetForm();
+          fetchServices();
         })
         .catch((error) => {
           console.error("Error adding service:", error);
@@ -65,15 +70,16 @@ const ServicesComponent = () => {
 
   const handleDeleteService = (serviceName) => {
     console.log("Deleting service:", serviceName);
-    axios.delete(`http://localhost:3000/services/delete-service`, {
-      headers: {
-        "token": localStorage.getItem("token"),
-        "name": serviceName
-      }
-    })
+    axios
+      .delete(`http://localhost:3000/services/delete-service`, {
+        headers: {
+          token: localStorage.getItem("token"),
+          name: serviceName,
+        },
+      })
       .then(() => {
-        setServices(services.filter((service) => service.name !== serviceName));
         toast.success("Service deleted successfully!");
+        fetchServices();
       })
       .catch((error) => {
         console.error("Error deleting service:", error);
@@ -90,6 +96,12 @@ const ServicesComponent = () => {
       setServicePrice(serviceToEdit.cost);
       setEditServiceName(serviceToEdit.name);
     }
+  };
+
+  const resetForm = () => {
+    setServiceName("");
+    setServicePrice("");
+    setEditServiceName(null);
   };
 
   return (
