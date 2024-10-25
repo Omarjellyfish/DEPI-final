@@ -70,7 +70,7 @@ export async function createAppointment(req, res) {
 
   const { year, month, day, timeSlot, service, cost, note } = req.body;
   // sendConfirmationEmail(
-  //   "omarkandilfan@gmail.com",
+  //   "email",
   //   req.userName[0],
   //   service,
   //   `${year}-${month}-${day}`
@@ -202,7 +202,7 @@ export async function cancelAppointment(req, res) {
   console.log(req.headers, "hello from headers");
   const appointmentId = req.headers["appointmentid"];
   console.log(appointmentId, "hello from cancel admin");
-  sendCancellationEmail("omarkandilfan@gmail.com", "", "", "");
+  // sendCancellationEmail("email", "", "", "");
 
   try {
     const deletedAppointment = await deleteAppointmentById(appointmentId);
