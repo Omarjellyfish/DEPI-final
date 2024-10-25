@@ -34,7 +34,7 @@ const BookingsComponent = () => {
         },
       })
       .then(() => {
-        setBookings(bookings.filter((booking) => booking.id !== bookingId));
+        fetchBookings();
         toast.success("Booking canceled successfully!");
       })
       .catch((error) => {
