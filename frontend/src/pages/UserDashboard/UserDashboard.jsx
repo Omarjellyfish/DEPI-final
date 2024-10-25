@@ -7,57 +7,76 @@ import { toast } from "react-toastify";
 
 const UserDashboard = () => {
   const [bookings, setBookings] = useState([]);
+
   useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/appointments/user", {
-          headers: {
-            "token": localStorage.getItem("token"),
-          },
-        });
-        console.log(response.data.appointments, 'hello from response in user dashboard');
-
-        let userBookings = [];
-        response.data.appointments.forEach((booking) => {
-          // Push the entire booking object to the userBookings array
-          userBookings.push({
-            appointmentId: booking.appointmentId,
-            cost: booking.cost,
-            date: booking.date,
-            note: booking.note,
-            service: booking.service,
-            user: booking.user,
-            _id: booking._id,
-          });
-        });
-        console.log(userBookings,"hello from user bookings");
-
-        setBookings(userBookings);
-      } catch (error) {
-        console.log("asdjfkasdhjklfhasdkjlf im here");
-        console.error("Error fetching user bookings:", error);
-      }
-    };
-
     fetchBookings();
   }, []);
 
-  const handleCancelBooking = (bookingId) => {
-    axios
-      .delete(`http://localhost:3000/appointments/cancel`, {
-        headers: {
-          token: localStorage.getItem("token"),
-          appointmentId: bookingId,
-        },
-      })
-      .then(() => {
-        setBookings(bookings.filter((booking) => booking.id !== bookingId));
+  const fetchBookings = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/appointments/user",
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      console.log(
+        response.data.appointments,
+        "hello from response in user dashboard"
+      );
+
+      let userBookings = response.data.appointments.map((booking) => ({
+        appointmentId: booking.appointmentId,
+        cost: booking.cost,
+        date: booking.date,
+        note: booking.note,
+        service: booking.service,
+        user: booking.user,
+        _id: booking._id,
+      }));
+
+      console.log(userBookings, "hello from user bookings");
+
+      setBookings(userBookings);
+    } catch (error) {
+      console.error("Error fetching user bookings:", error);
+    }
+  };
+
+  const handleCancelBooking = async (bookingId) => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:3000/appointments/cancel/${bookingId}`,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+
+      if (response.status === 200) {
         toast.success("Booking canceled successfully!");
-      })
-      .catch((error) => {
-        console.error("Error canceling booking:", error);
+
+        setBookings((prevBookings) =>
+          prevBookings.filter((booking) => booking._id !== bookingId)
+        );
+      } else {
         toast.error("Failed to cancel booking!");
-      });
+      }
+    } catch (error) {
+      console.error("Error canceling booking:", error);
+      if (error.response) {
+        toast.error(
+          `Failed to cancel booking! ${
+            error.response.data.message || error.message
+          }`
+        );
+      } else {
+        toast.error("Failed to cancel booking! Network error.");
+      }
+    }
   };
   return (
     <div className="container mt-4">
