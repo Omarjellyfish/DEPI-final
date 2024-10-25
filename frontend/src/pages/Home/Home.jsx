@@ -68,8 +68,8 @@ function Home() {
   const checkBusinessStatus = () => {
     const now = new Date();
     const currentHour = now.getHours();
-    const openingHour = 10;
-    const closingHour = 19;
+    const openingHour = 9;
+    const closingHour = 18;
 
     if (currentHour >= openingHour && currentHour < closingHour) {
       setIsOpen(true);

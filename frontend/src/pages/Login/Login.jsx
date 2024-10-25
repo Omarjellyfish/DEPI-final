@@ -52,34 +52,25 @@ const Login = () => {
       );
       const token = response.data.token.token;
       const refresh = response.data.token.refresh;
-      const usertype=response.data.Type.type
-      console.log("helo user type",usertype); //user or admin
-      console.log(response.data);
+      const userType = response.data.Type.type;
 
-      localStorage.setItem("userType",usertype)
+      localStorage.setItem("userType", userType);
       localStorage.setItem("token", token);
       localStorage.setItem("refresh", refresh);
+      localStorage.setItem("loggedIn", true);
 
       toast.success("Login successful!");
-      console.log("Login successful:", response.data);
-      localStorage.setItem("loggedIn", true)
-
-      if (isAdmin) {
+      if (userType === "admin") {
         navigate("/adminDashboard");
       } else {
         navigate("/services");
       }
     } catch (error) {
-      if (error.response) {
-        setError(
-          error.response.data.message ||
-            "Login failed. Please check your credentials."
-        );
-        toast.error("Login failed. Please check your credentials.");
-      } else {
-        setError("Login failed. Please try again later.");
-        toast.error("Login failed. Please try again later.");
-      }
+      setError(
+        error.response?.data.message ||
+          "Login failed. Please check your credentials."
+      );
+      toast.error("Login failed. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -96,7 +87,6 @@ const Login = () => {
               You are about to access one of our core services: Personalized
               Physical Therapy Solutions™
             </p>
-
             <button className="btn btn-outline-light m-2">
               What to Expect?
             </button>
