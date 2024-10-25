@@ -3,7 +3,7 @@
 **EasyReserve** is a web-based Booking System developed as part of the Digital Egypt Pioneers Initiative (DEPI) graduation project. It allows users to conveniently schedule and manage their appointments , while also enabling admins to showcase their services and availability, while offering an admin dashboard for managing bookings and viewing statistics. It is designed to support secure, scalable, and responsive features for a seamless user experience. 
 
 ## Features
-- **User-Friendly Interface**:Patients can browse through available services, and create appointments 
+- **User-Friendly Interface**:users can browse through available services, and create appointments 
 - **Service Display**:  displaying services and crud operations for admins 
 - **Appointment Booking**: users can book, view, cancel their appointments with ease. 
 - **Secure Authentication**: users and admins can log in securely to manage their appointments and profiles. 
