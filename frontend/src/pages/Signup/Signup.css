@@ -1,5 +1,5 @@
 .signup-page {
-  height: calc(100vh);
+  height: calc(110vh);
   background-color: #4b2d83;
 }
 
@@ -9,7 +9,7 @@
 
 .right-section {
   background-color: #5939a6;
-  height: calc(100vh);
+  height: calc(110vh);
 }
 
 .form-card-parent {
