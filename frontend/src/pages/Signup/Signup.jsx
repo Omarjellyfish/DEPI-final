@@ -69,22 +69,16 @@ const Signup = () => {
       console.log("Response:", response.data);
 
       if (response.data.error) {
-        toast.error(response.data.error, {
-          theme: "dark",
-        });
+        toast.error(response.data.error);
       } else {
-        toast.success("Signed up successfully!", {
-          theme: "dark",
-        });
+        toast.success("Signed up successfully!");
         navigate("/login");
       }
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
         "Failed to sign up. Please try again later.";
-      toast.error(errorMessage, {
-        theme: "dark",
-      });
+      toast.error(errorMessage);
     }
   };
 
